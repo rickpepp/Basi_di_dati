@@ -1,0 +1,133 @@
+html {
+    margin: 0;
+    background-image: linear-gradient(to right bottom, #A3B18A, #3A5A40);
+    height: 100vh;
+    padding: 0%;
+}
+
+h1 {
+    text-align: center;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 85px;
+    color: #283618;
+    text-shadow: 4px 3px 8px #A3B18A;
+    margin-top: 40px;
+}
+
+main {
+    margin: 20vh 8% 0 8%;
+    text-align: center;
+    height: 500%;
+    display: flex;
+    justify-content: space-between;
+}
+
+input[type="button"] {
+    width: 20%;
+    padding: 8% 0 8% 0;
+    border-radius: 100%;
+    font-size: 2vw;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background: radial-gradient(#DAD7CD, #A3B18A);
+    border: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+input[value="Indietro"] {
+    margin: 4% 0 4% !important;
+    background: radial-gradient(#DAD7CD, #5e5e5e93) !important;
+}
+
+input[type="button"]:hover {
+    box-shadow: 0 0 15px 15px rgba(0,0,0,0.3);
+}
+
+table {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    margin-top: 4%;
+    min-width: 80%;
+}
+
+td, th {
+    border: 1px solid black;
+    padding: 8px;
+}
+
+.centered main {
+    justify-content: center;
+    margin-top: 10vh;
+}
+
+.centered form {
+    padding: 2% 5%;
+    background-color: #DAD7CD;
+    border-radius: 25px;
+    width: 40%;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+.centered h2 {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 35px;
+    color: #283618;
+    margin: 0%;
+    margin-bottom: 2%;
+}
+
+.centered input {
+    width: 90%;
+    margin-top: 2%;
+    margin-bottom: 5%;
+    padding: 5px;
+    border-radius: 15px;
+    border-width: 1px;
+}
+
+.centered input[type="button"] {
+    width: 150px;
+    font-size: 22px;
+    margin-top: 2%;
+    margin-bottom: 0;
+    background: radial-gradient(#DAD7CD,#A3B18A);
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.3);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.centered input[type="button"]:hover {
+    box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.3);
+}
+
+div {
+    width: 80%;
+    background-color: #DAD7CD;
+    border-radius: 25px;
+}
+
+ul {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    list-style: none;
+    padding: 0;
+    width: 100%;
+}
+
+li {
+    padding: 1%;
+    width: 60%;
+    margin-left: 19%;
+    border-radius: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 25px;
+    margin-top: 30px;
+    background: radial-gradient(#DAD7CD,#A3B18A);
+    box-shadow: 2px 2px 5px 2px rgba(0,0,0,0.3);
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+li:hover {
+    box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.3);
+}
