@@ -7,20 +7,14 @@
         <link rel="icon" type="img/png" href="#" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     </head>
-    <body class="centered">
+    <body>
         <header>
             <h1>Printing Farm</h1>
         </header>
         <main>
-            <div>
-                <ul>
-                    <!--Inserire javascript per regolare altezza html in base ad elementi-->
-                    <li>Inserimento nuovo contratto di lavoro</li><br>
-                    <li>Costo dipendenti per settore</li><br>
-                    <li>Riepilogo contratto dipendente</li><br>
-                    <li>Logout</li>
-                </ul>
-            </div>
+            <input type="button" value="Risorse Umane" onclick="location.href='login.php?r=1';"/>
+            <input type="button" value="Operaio" onclick="location.href='login.php?r=2';"/>
+            <input type="button" value="Venditore" onclick="location.href='login.php?r=3';"/>
         </main>
     </body>
 </html>
