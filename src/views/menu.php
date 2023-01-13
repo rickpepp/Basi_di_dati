@@ -6,6 +6,7 @@
         <link rel="stylesheet" type="text/css" href="../css/style.css" />
         <link rel="icon" type="img/png" href="#" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script type="text/javascript"><?php echo "alert(\"".$_GET['msg']."\");" ?></script>
     </head>
     <body class="centered">
         <header>
@@ -22,12 +23,15 @@
 
                         sec_session_start();
 
+                        //Seleziona Ruolo in base al ruolo
                         if($dbh -> login_check()) {
                             switch ($_SESSION['ruolo']) {
                                 case 'addettorisorseumane':
-                                    echo "<li>Inserimento nuovo contratto di lavoro</li><br>
+                                    echo "<a href='inserimento_dati.php?action=0'><li>Inserimento nuovo contratto di lavoro</li></a><br>
                                     <li>Costo dipendenti per settore</li><br>
-                                    <li>Riepilogo contratto dipendente</li><br>";
+                                    <li>Riepilogo contratto dipendente</li><br>
+                                    <li>Licenziamento Dipendente</li><br>
+                                    <li>Aggiungi Telefono Dipendente</li><br>";
                                     break;
                                 case 'operaio':
                                     echo "<li>Inserimento manutenzione stampante</li><br>

@@ -13,6 +13,139 @@
          }        
       }
 
+      //Inserimento nuovo dipendente
+      public function sign_up($nome, $cognome, $email, $codice_fiscale, $numero_telefono, $ruolo, $data_assunzione, $costo_registrazione, $livello_registrazione, $password, $random_salt_password, $ARU) {
+         //Seleziona tabella e attributi dove inserire record
+         switch ($ruolo) {
+            case 'Venditore':
+               $ruolo = 'venditore';
+               $ruolo_telefono = 'numerotelefonovenditore';
+               $nomeidentificatore = 'CodiceVenditore';
+               $contratto = 'Venditore';
+               break;
+            case 'Addetto Risorse Umane':
+               $ruolo = 'addettorisorseumane';
+               $ruolo_telefono = 'numerotelefonoaru';
+               $nomeidentificatore = 'CodiceARU';
+               $contratto = 'ARU';
+               break;
+            case 'Operaio':
+               $ruolo = 'operaio';
+               $ruolo_telefono = 'numerotelefonooperaio';
+               $nomeidentificatore = 'CodiceOperaio';
+               $contratto = 'Operaio';
+               break;
+         }
+         
+         //Dato che il progettista non richiede inserimento password si controlla se il caso è questo (altrimenti query diversa)
+         if ($ruolo != 'Progettista') {
+            //Controllo che la mail inserita non sia già presente nel DB
+            if ($stmt = $this->db->prepare("SELECT $nomeidentificatore FROM $ruolo WHERE Email = ? LIMIT 1")) {
+               $stmt->bind_param('s', $email);
+               $stmt->execute();
+               $stmt->store_result();
+            
+               if($stmt->num_rows != 0) {
+                  //Caso già presente
+                  return false;
+               } else {
+                  //Caso non presente
+                  //Inserisce il dipendete nella rispettiva tabella
+                  if ($insert_stmt = $this -> db -> prepare("INSERT INTO $ruolo (Nome, cognome, Email, CodiceFiscale, password, salt) VALUES (?, ?, ?, ?, ?, ?)")) {
+                     $insert_stmt -> bind_param('ssssss', $nome, $cognome, $email, $codice_fiscale, $password, $random_salt_password);
+                     $insert_stmt -> execute();
+                     //Seleziona identificatore appena inserito
+                     if ($stmt = $this -> db -> prepare("SELECT MAX($nomeidentificatore) FROM $ruolo")) {
+                        $stmt -> execute();
+                        $stmt -> store_result();
+                        $stmt -> bind_result($user_id);
+                        $stmt -> fetch();
+                        //Inserisce il relativo numero di telefono
+                        if ($stmt1 = $this -> db -> prepare("INSERT INTO $ruolo_telefono ($nomeidentificatore, NumeroTelefono) VALUES (?, ?)")) {
+                           $stmt1 -> bind_param('ii', $user_id, $numero_telefono);
+                           $stmt1 -> execute();
+                           //Inserisce il contratto di lavoro
+                           if ($stmt2 = $this -> db -> prepare("INSERT INTO contrattolavoro (DataAssunzione, CostoDipendente, LivelloContrattuale, $contratto, ARU_inserimento) VALUES (?, ?, ?, ?, ?)")) {
+                              $stmt2 -> bind_param('siiii', $data_assunzione, $costo_registrazione, $livello_registrazione, $user_id, $ARU);
+                              $stmt2 -> execute();
+                              return true;
+                           } else {
+                              //Inserimento dipendente fallito
+                              return false;
+                           }
+                        } else {
+                           //Inserimento dipendente fallito
+                           return false;
+                        }
+                     } else {
+                        //Inserimento dipendente fallito
+                        return false;
+                     }
+                  } else {
+                     //Inserimento dipendente fallito
+                     return false;
+                  }
+               }
+            } else {
+               //Inserimento dipendente fallito
+               return false;
+            }
+         } else {
+            //Nel caso progettista controlla se già presente la mail
+            if ($stmt = $this->db->prepare("SELECT CodiceProgettista FROM progettista WHERE Email = ? LIMIT 1")) {
+               $stmt->bind_param('s', $email);
+               $stmt->execute();
+               $stmt->store_result();
+            
+               if($stmt->num_rows != 0) {
+                  //Caso già presente
+                  return false;
+               } else {
+                  //Caso non presente
+                  //Aggiunge record a progettista
+                  if ($insert_stmt = $this -> db -> prepare("INSERT INTO progettista (Nome, cognome, Email, CodiceFiscale) VALUES (?, ?, ?, ?)")) {
+                     $insert_stmt -> bind_param('ssss', $nome, $cognome, $email, $codice_fiscale);
+                     $insert_stmt -> execute();
+                     //Seleziona id record appena creato
+                     if ($stmt = $this -> db -> prepare("SELECT MAX(CodiceProgettista) FROM progettista")) {
+                        $stmt -> execute();
+                        $stmt -> store_result();
+                        $stmt -> bind_result($user_id);
+                        $stmt -> fetch();
+                        //Aggiunge numero di telefono
+                        if ($stmt1 = $this -> db -> prepare("INSERT INTO numerotelefonoprogettista (CodiceProgettista, NumeroTelefono) VALUES (?, ?)")) {
+                           $stmt1 -> bind_param('ii', $user_id, $numero_telefono);
+                           $stmt1 -> execute();
+                           //Aggiugne contratto di lavoro
+                           if ($stmt2 = $this -> db -> prepare("INSERT INTO contrattolavoro (DataAssunzione, CostoDipendente, LivelloContrattuale, Progettista, ARU_inserimento) VALUES (?, ?, ?, ?, ?)")) {
+                              $stmt2 -> bind_param('siiii', $data_assunzione, $costo_registrazione, $livello_registrazione, $user_id, $ARU);
+                              $stmt2 -> execute();
+                              return true;
+                           } else {
+                              //Inserimento progettista fallito
+                              return false;
+                           }
+                        } else {
+                           //Inserimento progettista fallito
+                           return false;
+                        }
+                     } else {
+                        //Inserimento progettista fallito
+                        return false;
+                     }
+                  } else {
+                     //Inserimento progettista fallito
+                     return false;
+                  }
+               }
+            } else {
+               //Inserimento progettista fallito
+               return false;
+            }
+         }
+      }
+      
+
     //Login utente
     public function login($email, $password, $ruolo, $nomeidentificatore) {
         // Usando statement sql 'prepared' non sarà possibile attuare un attacco di tipo SQL injection.

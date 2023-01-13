@@ -22,9 +22,3 @@ function formhasha(form, password) {
    }
     
  }
-
-//Rende funzionante la x presente nel footer per la privacy
-function hide() {
-   const footer = document.getElementById('informativa');
-   footer.style.display = 'none';
-}

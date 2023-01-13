@@ -11,6 +11,12 @@ a, a:hover, a:focus, a:active {
     color: inherit;
 }
 
+input[value="Aggiungi Numero"] {
+    margin-bottom: 25px !important;
+    margin-top: 0px !important;
+    font-size: 15px !important;
+}
+
 h1 {
     text-align: center;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -58,6 +64,28 @@ table {
     min-width: 80%;
 }
 
+select {
+    margin-bottom: 7%;
+    width: 93%;
+    margin-top: 2%;
+    padding: 5px;
+    border-radius: 15px;
+    border-width: 1px;
+}
+
+/* Rimuovere Frecce html type input */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+option {
+    margin: 0;
+    width: 100%;
+}
+
 td, th {
     border: 1px solid black;
     padding: 8px;
@@ -87,7 +115,7 @@ td, th {
 .centered input {
     width: 90%;
     margin-top: 2%;
-    margin-bottom: 5%;
+    margin-bottom: 7%;
     padding: 5px;
     border-radius: 15px;
     border-width: 1px;

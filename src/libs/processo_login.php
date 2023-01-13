@@ -9,6 +9,7 @@
       $email = $_POST['email_accesso'];
       $password = $_POST['password_accesso']; // Recupero la password criptata.
 
+      //Seleziona il menù in base al ruolo
       switch ($_POST['r']) {
          case "1":
             $ruolo = 'addettorisorseumane';

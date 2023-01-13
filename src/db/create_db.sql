@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.NumeroTelefonoProgettista (
         ON UPDATE NO ACTION
 );
 
+-- Password cicciopasticcio@ciao.it Ciao%
 -- Addetto Risorse Umane
 
 CREATE TABLE IF NOT EXISTS Printing_Farm.AddettoRisorseUmane (
@@ -386,7 +387,7 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.ContrattoLavoro (
         ON DELETE NO ACTION
         ON UPDATE NO ACTION,
     CONSTRAINT fk_ContrattoLavoro_ARU_inserimento
-        FOREIGN KEY (Venditore) 
+        FOREIGN KEY (ARU_inserimento) 
         REFERENCES Printing_Farm.AddettoRisorseUmane(CodiceARU)
         ON DELETE NO ACTION
         ON UPDATE NO ACTION
