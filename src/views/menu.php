@@ -28,8 +28,8 @@
                             switch ($_SESSION['ruolo']) {
                                 case 'addettorisorseumane':
                                     echo "<a href='inserimento_dati.php?action=0'><li>Inserimento nuovo contratto di lavoro</li></a><br>
-                                    <li>Costo dipendenti per settore</li><br>
-                                    <li>Riepilogo contratto dipendente</li><br>
+                                    <a href='visualizza_dati.php?action=1'><li>Costo dipendenti per settore</li></a><br>
+                                    <a href='inserimento_dati.php?action=2'><li>Riepilogo contratto dipendente</li></a><br>
                                     <li>Licenziamento Dipendente</li><br>
                                     <li>Aggiungi Telefono Dipendente</li><br>";
                                     break;

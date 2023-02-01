@@ -24,9 +24,6 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.NumeroTelefonoProgettista (
         ON UPDATE NO ACTION
 );
 
--- Password cicciopasticcio@ciao.it Ciao%
--- Addetto Risorse Umane
-
 CREATE TABLE IF NOT EXISTS Printing_Farm.AddettoRisorseUmane (
     CodiceARU INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Nome VARCHAR(30) NOT NULL,
@@ -128,7 +125,7 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.Stampante_3D (
     NumeroSeriale VARCHAR(30) NOT NULL,
     OreStampa INT NOT NULL DEFAULT 0 ,
     TipologiaStampa VARCHAR(30) NOT NULL,
-    CHECK (OreStampa>0)
+    CHECK (OreStampa>=0)
 );
 
 CREATE TABLE IF NOT EXISTS Printing_Farm.Acquisto (
@@ -365,7 +362,7 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.ContrattoLavoro (
     ARU INT,
     Progettista INT,
     ARU_inserimento INT NOT NULL,
-    CHECK (CostoDipendente>0),
+    CHECK (CostoDipendente>=0),
     CONSTRAINT fk_ContrattoLavoro_Progettista
         FOREIGN KEY (Progettista) 
         REFERENCES Printing_Farm.Progettista(CodiceProgettista)

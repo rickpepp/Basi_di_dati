@@ -34,7 +34,7 @@ main {
     justify-content: space-between;
 }
 
-input[type="button"] {
+input[type="button"],  input[type="submit"]{
     width: 20%;
     padding: 8% 0 8% 0;
     border-radius: 100%;
@@ -51,7 +51,7 @@ input[value="Indietro"] {
     background: radial-gradient(#DAD7CD, #5e5e5e93) !important;
 }
 
-input[type="button"]:hover {
+input[type="button"]:hover ,  input[type="submit"]:hover {
     box-shadow: 0 0 15px 15px rgba(0,0,0,0.3);
 }
 
@@ -61,7 +61,7 @@ table {
     margin-right: auto;
     border-collapse: collapse;
     margin-top: 4%;
-    min-width: 80%;
+    width: 80%;
 }
 
 select {
@@ -121,7 +121,7 @@ td, th {
     border-width: 1px;
 }
 
-.centered input[type="button"] {
+.centered input[type="button"] , .centered input[type="submit"] {
     width: 150px;
     font-size: 22px;
     margin-top: 2%;
@@ -131,12 +131,12 @@ td, th {
     transition: box-shadow 0.3s ease-in-out;
 }
 
-.centered input[type="button"]:hover {
+.centered input[type="button"]:hover , .centered input[type="submit"]:hover {
     box-shadow: 0px 0px 5px 5px rgba(0,0,0,0.3);
 }
 
 div {
-    width: 80%;
+    width: 90%;
     background-color: #DAD7CD;
     border-radius: 25px;
 }

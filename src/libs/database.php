@@ -22,18 +22,21 @@
                $ruolo_telefono = 'numerotelefonovenditore';
                $nomeidentificatore = 'CodiceVenditore';
                $contratto = 'Venditore';
+               $costo = 'CostoVenditori';
                break;
             case 'Addetto Risorse Umane':
                $ruolo = 'addettorisorseumane';
                $ruolo_telefono = 'numerotelefonoaru';
                $nomeidentificatore = 'CodiceARU';
                $contratto = 'ARU';
+               $costo = 'CostoARU';
                break;
             case 'Operaio':
                $ruolo = 'operaio';
                $ruolo_telefono = 'numerotelefonooperaio';
                $nomeidentificatore = 'CodiceOperaio';
                $contratto = 'Operaio';
+               $costo = 'CostoOperai';
                break;
          }
          
@@ -68,7 +71,24 @@
                            if ($stmt2 = $this -> db -> prepare("INSERT INTO contrattolavoro (DataAssunzione, CostoDipendente, LivelloContrattuale, $contratto, ARU_inserimento) VALUES (?, ?, ?, ?, ?)")) {
                               $stmt2 -> bind_param('siiii', $data_assunzione, $costo_registrazione, $livello_registrazione, $user_id, $ARU);
                               $stmt2 -> execute();
-                              return true;
+                              //Aggiunge Costo All'anno Economico
+                              if ($stmt = $this -> db -> prepare("SELECT * FROM AnnoEconomico WHERE AnnoRiferimento = ?;")) {
+                                 $stmt -> bind_param('i', date("Y"));
+                                 $stmt -> execute();
+                                 $stmt->store_result();
+                                 if ($stmt -> num_rows == 0) {
+                                    if ($stmt = $this -> db -> prepare("INSERT INTO AnnoEconomico (AnnoRiferimento) VALUES (?)")) {
+                                       $stmt -> bind_param('i', date("Y"));
+                                       $stmt -> execute();
+                                    }
+                                 }
+                                 if ($stmt = $this -> db -> prepare("UPDATE AnnoEconomico SET $costo = $costo + ? WHERE AnnoRiferimento = ?;")) {
+                                    $stmt -> bind_param('ii', $costo_registrazione, date("Y"));
+                                    $stmt -> execute();
+                                    return true;
+                                 }
+                              }
+
                            } else {
                               //Inserimento dipendente fallito
                               return false;
@@ -120,7 +140,24 @@
                            if ($stmt2 = $this -> db -> prepare("INSERT INTO contrattolavoro (DataAssunzione, CostoDipendente, LivelloContrattuale, Progettista, ARU_inserimento) VALUES (?, ?, ?, ?, ?)")) {
                               $stmt2 -> bind_param('siiii', $data_assunzione, $costo_registrazione, $livello_registrazione, $user_id, $ARU);
                               $stmt2 -> execute();
-                              return true;
+                              //Aggiunge Costo ad Anno Economico
+                              if ($stmt = $this -> db -> prepare("SELECT * FROM AnnoEconomico WHERE AnnoRiferimento = ?;")) {
+                                 $stmt -> bind_param('i', date("Y"));
+                                 $stmt -> execute();
+                                 $stmt->store_result();
+                                 if ($stmt -> num_rows == 0) {
+                                    if ($stmt = $this -> db -> prepare("INSERT INTO AnnoEconomico (AnnoRiferimento) VALUES (?)")) {
+                                       $stmt -> bind_param('i', date("Y"));
+                                       $stmt -> execute();
+                                    }
+                                 }
+                                 if ($stmt = $this -> db -> prepare("UPDATE AnnoEconomico SET CostoProgettisti = CostoProgettisti + ? WHERE AnnoRiferimento = ?;")) {
+                                    $stmt -> bind_param('ii', $costo_registrazione, date("Y"));
+                                    $stmt -> execute();
+                                    return true;
+                                 }
+                              }
+                              
                            } else {
                               //Inserimento progettista fallito
                               return false;
@@ -221,6 +258,69 @@
             // Login non eseguito
             return false;
          }
+      }
+      
+      //Restituisce Dati Principali Dipendente in base al nome, cognome e ruolo
+      public function get_dipendente($nome, $cognome, $ruolo) {
+         if ($ruolo == 'AddettoRisorseUmane') {
+            $id = 'CodiceARU';
+            $contratto = 'ARU';
+         } else if ($ruolo == 'Operaio') {
+            $id = 'CodiceOperaio';
+            $contratto = $ruolo;
+         } else if ($ruolo == 'Progettista') {
+            $id = 'CodiceProgettista';
+            $contratto = $ruolo;
+         } else if ($ruolo == 'Venditore') {
+            $id = 'CodiceVenditore';
+            $contratto = $ruolo;
+         } else {
+            return NULL;
+         }
+         
+         if ($stmt = $this->db->prepare("SELECT dipendente.$id AS id, dipendente.Nome, dipendente.Cognome, dipendente.Email, dipendente.CodiceFiscale, DataAssunzione, CostoDipendente, DataLicenziamento, LivelloContrattuale, addetto.Nome AS NomeAddetto, addetto.Cognome AS CognomeAddetto FROM $ruolo dipendente, addettorisorseumane addetto, contrattolavoro WHERE dipendente.Nome = ? AND dipendente.Cognome = ? AND addetto.CodiceARU = ARU_inserimento AND contrattolavoro.$contratto = dipendente.$id;")) {
+            $stmt->bind_param('ss', $nome, $cognome);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+         }
+         return $result;
+      }
+
+      //Restituisce Numeri di Telefono selezionando id dipendente ed il ruolo
+      public function get_numero_telefono($id, $ruolo) {
+         if ($ruolo == 'AddettoRisorseUmane') {
+            $ruolo = 'NumeroTelefonoARU';
+            $nome_id = 'CodiceARU';
+         } else if ($ruolo == 'Operaio') {
+            $ruolo = 'NumeroTelefonoOperaio';
+            $nome_id = 'CodiceOperaio';
+         } else if ($ruolo == 'Progettista') {
+            $ruolo = 'NumeroTelefonoProgettista';
+            $nome_id = 'CodiceProgettista';
+         } else if ($ruolo == 'Venditore') {
+            $ruolo = 'NumeroTelefonoVenditore';
+            $nome_id = 'CodiceVenditore';
+         } 
+
+         if ($stmt = $this->db->prepare("SELECT NumeroTelefono FROM $ruolo WHERE $nome_id = ?")) {
+            $stmt->bind_param('s', $id);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+         }
+         return $result;
+      }
+
+      //Costo Per Settore
+      public function costo_per_settore() {
+         if($stmt = $this->db->prepare("SELECT AnnoRiferimento, CostoProgettisti, CostoVenditori, CostoOperai, CostoARU FROM AnnoEconomico ORDER BY AnnoRiferimento DESC")) {
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+
       }
 
     }

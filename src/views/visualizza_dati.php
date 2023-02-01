@@ -17,10 +17,11 @@
             <?php
                 switch ($_GET['action']) {
                     case 0:
-                        include '../libs/inserimento_contratto.php';
+                        include '../libs/processo_riepilogo_dipendente.php';
                         break;
-                    case 2:
-                        include '../libs/riepilogo_dipendente.php';
+                    case 1:
+                        include '../libs/processo_costo_per_settore.php';
+                        break;
                 }
             ?>
         </main>
