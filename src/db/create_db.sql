@@ -147,11 +147,11 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.Acquisto (
 );
 
 CREATE TABLE IF NOT EXISTS Printing_Farm.Manutenzione (
+    CodiceManutenzione INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     Stampante INT NOT NULL,
     DataManutenzione DATE NOT NULL,
     Descrizione TEXT,
     Operaio INT NOT NULL,
-    PRIMARY KEY(Stampante,Operaio),
     CONSTRAINT fk_Manutenzione_Stampante
         FOREIGN KEY (Stampante) 
         REFERENCES Printing_Farm.Stampante_3D(CodiceStampante)
@@ -274,8 +274,8 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.Ordine (
 CREATE TABLE IF NOT EXISTS Printing_Farm.ServizioPostProduzione (
     CodiceServizio INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     NomeServizio VARCHAR(30) NOT NULL,
-    CostoServizio FLOAT NOT NULL DEFAULT 0,
-    Disponibilità BOOLEAN NOT NULL DEFAULT 0,
+    CostoServizio FLOAT NOT NULL DEFAULT 1,
+    Disponibilità BOOLEAN NOT NULL DEFAULT 1,
     CHECK (CostoServizio>0)
 );
 

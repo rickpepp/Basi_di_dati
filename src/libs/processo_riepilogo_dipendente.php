@@ -53,7 +53,7 @@
                         echo '</td>'.
                         '<td>'.$single_result["DataAssunzione"].'</td>'.
                         '<td>'.$single_result["DataLicenziamento"].'</td>'.
-                        '<td>'.$single_result["CostoDipendente"].'</td>'.
+                        '<td>'.$single_result["CostoDipendente"].'€</td>'.
                         '<td>'.$single_result["LivelloContrattuale"].'</td>'.
                         '<td>'.$single_result["NomeAddetto"].' '.$single_result["CognomeAddetto"].'</td>'.
                         '<td><img src="../img/modifica.png" alt="icona modifica" onclick="location.href=\'../views/menu_modifica_contratto.php?id='.$single_result["id"].'&ruolo_id='.$ruolo.'&CodiceContratto='.$single_result["CodiceContratto"].'\'"/></td>'.

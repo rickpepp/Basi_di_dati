@@ -32,9 +32,10 @@
                                     <a href='inserimento_dati.php?action=2'><li>Riepilogo e modifica contratto dipendente</li></a><br>";
                                     break;
                                 case 'operaio':
-                                    echo "<li>Inserimento manutenzione stampante</li><br>
-                                    <li>Inserimento nuovo servizio di post produzione</li><br>
-                                    <li>Elenco servizi post produzione richiesti da ordine</li><br>";
+                                    echo "<a href='inserimento_dati.php?action=4'><li>Gestione manutenzione stampante</li></a><br>
+                                    <a href='visualizza_dati.php?action=4'><li>Gestione servizi di post produzione</li></a><br>
+                                    <a href='inserimento_dati.php?action=7'><li>Ricerca Ordine</li></a><br>
+                                    <a href=visualizza_dati.php?action=6'><li>Elenco Ordini da Spedire</li></a>";
                                     break;
                                 case 'venditore':
                                     echo "<li>Inserimento nuovo corriere</li><br>

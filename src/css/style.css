@@ -47,12 +47,25 @@ input[type="button"],  input[type="submit"]{
 }
 
 input[value="Indietro"] {
-    margin: 4% 0 4% !important;
+    margin: 30px 0 30px !important;
     background: radial-gradient(#DAD7CD, #5e5e5e93) !important;
 }
 
 input[type="button"]:hover ,  input[type="submit"]:hover {
     box-shadow: 0 0 15px 15px rgba(0,0,0,0.3);
+}
+
+input[type="checkbox"] {
+    width: 20px !important;
+    margin-bottom: 0 !important;
+}
+
+fieldset {
+    text-align: left;
+}
+
+legend {
+    text-align: center;
 }
 
 table {

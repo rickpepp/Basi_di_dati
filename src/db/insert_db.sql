@@ -161,6 +161,7 @@ MODIFY `CodiceOrdine` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 INSERT INTO `Compimento` (`Operaio`,`Servizio`) VALUES 
 ('1','2'),
+('2','2'),
 ('2','1');
 
 

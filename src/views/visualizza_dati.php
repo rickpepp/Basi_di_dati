@@ -22,6 +22,17 @@
                     case 1:
                         include '../libs/processo_costo_per_settore.php';
                         break;
+                    case 2:
+                        include '../libs/processo_elenco_stampanti.php';
+                        break;
+                    case 3:
+                        include '../libs/processo_elenco_manutenzione.php';
+                        break;
+                    case 4:
+                        include '../libs/processo_elenco_servizio.php';
+                        break;
+                    case 5:
+                        include '../libs/processo_cerca_ordine.php';
                 }
             ?>
         </main>

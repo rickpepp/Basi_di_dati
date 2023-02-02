@@ -371,5 +371,144 @@
          }
       }
 
+      //Cerca Stampanti
+      public function get_stampanti($marchio, $modello, $seriale) {
+         if ($modello == '') {
+            if($stmt = $this->db->prepare("SELECT * FROM Stampante_3d WHERE MarchioProduzione = ?")) {
+               $stmt->bind_param('s', $marchio);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else if ($seriale == '') {
+            if($stmt = $this->db->prepare("SELECT * FROM Stampante_3d WHERE MarchioProduzione = ? AND Modello = ?")) {
+               $stmt->bind_param('ss', $marchio, $modello);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else {
+            if($stmt = $this->db->prepare("SELECT * FROM Stampante_3d WHERE MarchioProduzione = ? AND Modello = ? AND NumeroSeriale = ?")) {
+               $stmt->bind_param('sss', $marchio, $modello, $seriale);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         }
+      }
+
+      //Elenco manutenzione stampante
+      public function get_manutenzione($id) {
+         if($stmt = $this->db->prepare("SELECT DataManutenzione, Descrizione, Nome, Cognome FROM Manutenzione, Operaio WHERE Operaio.CodiceOperaio = Manutenzione.Operaio AND Stampante = ?")) {
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+      }
+
+      //Aggiungi manutenzione stampante
+      public function aggiungi_manutenzione($data, $descrizione, $id, $user_id) {
+         if ($stmt = $this->db->prepare("INSERT Manutenzione (Stampante, DataManutenzione, Descrizione, Operaio) VALUES (?, ?, ?, ?)")) {
+            $stmt->bind_param('issi', $id, $data, $descrizione, $user_id);
+            $stmt->execute();
+            return true;
+         } else {
+            return false;
+         }
+      }
+
+      //Elenco Servizi Post Produzione
+      public function get_servizio() {
+         if($stmt = $this->db->prepare("SELECT * FROM ServizioPostProduzione")) {
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+      }
+
+      //Elenco Operai Addetti al Servizio
+      public function get_operaio_servizio($id) {
+         if($stmt = $this->db->prepare("SELECT Nome, Cognome FROM Compimento, Operaio WHERE Operaio.CodiceOperaio = Compimento.Operaio AND Servizio = ?")) {
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+      }
+
+      //Elenco Completo Operai
+      public function get_operai() {
+         if($stmt = $this->db->prepare("SELECT * FROM Operaio")) {
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+      }
+
+      public function aggiungi_servizio($nome, $costo, $disp, $operai) {
+         if($disp == 'Sì') {
+            $disp = 1;
+         } else {
+            $disp = 0;
+         }
+         if($stmt = $this->db->prepare("INSERT ServizioPostProduzione (NomeServizio, CostoServizio, Disponibilità) VALUES (?, ?, ?)")) {
+            $stmt->bind_param('sii', $nome, $costo, $disp);
+            $stmt->execute();
+            if ($stmt = $this -> db -> prepare("SELECT MAX(CodiceServizio) FROM ServizioPostProduzione")) {
+               $stmt -> execute();
+               $stmt -> store_result();
+               $stmt -> bind_result($id_servizio);
+               $stmt -> fetch();
+               foreach ($operai as $operaio) {
+                  $this -> aggiungi_operaio_servizio($operaio,$id_servizio);
+               }
+               return true;
+            } else {
+               return false;
+            }
+         } else {
+            return false;
+         }
+      }
+
+      private function aggiungi_operaio_servizio($id_operaio, $id_servizio) {
+         if($stmt = $this->db->prepare("INSERT compimento (Operaio, Servizio) VALUES (?, ?)")) {
+            $stmt->bind_param('ii', $id_operaio, $id_servizio);
+            $stmt->execute();
+            
+            return true;
+         } else {
+            return false;
+         }
+      }
+
+      public function get_ordine($id) {
+         if($stmt = $this->db->prepare("SELECT CodiceOrdine, NomeFile, TempoRichiesto, DataOrdine, QuantitàMateriale, Costo, Materiale.NomeMateriale, Materiale.MarchioProduttore AS MaterialeProduttore, Venditore.Nome AS NomeVenditore, Venditore.Cognome AS CognomeVenditore, Stampante_3d.MarchioProduzione AS MarchioStampante, Stampante_3d.Modello, Stampante_3d.NumeroSeriale, Cliente.Nome AS NomeCliente, Cliente.Cognome AS CognomeCliente, Cliente.Email, Cliente.CodiceFiscale, Cliente.Via, Cliente.NumeroCivico, Cliente.CAP, Cliente.Città FROM Ordine, Cliente, Materiale, Stampante_3d, Venditore WHERE Materiale.CodiceMateriale = Ordine.Materiale AND Venditore.CodiceVenditore = Ordine.Venditore AND Stampante_3d.CodiceStampante = Ordine.Stampante AND Cliente.CodiceCliente = Ordine.Cliente AND CodiceOrdine = ?")) {
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+      }
+
+      public function get_servizi_ordine($id) {
+         if($stmt = $this->db->prepare("SELECT NomeServizio FROM ServizioPostProduzione, Richiesta WHERE CodiceServizio = Servizio AND Ordine = ?")) {
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+      }
+
     }
 ?>

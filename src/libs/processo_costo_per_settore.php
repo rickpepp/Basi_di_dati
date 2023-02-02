@@ -21,10 +21,10 @@
         foreach ($risultati as $result) {
             echo '<tr>
                 <td>'.$result["AnnoRiferimento"].'</td>
-                <td>'.$result["CostoOperai"].'</td>
-                <td>'.$result["CostoVenditori"].'</td>
-                <td>'.$result["CostoProgettisti"].'</td>
-                <td>'.$result["CostoARU"].'</td>
+                <td>'.$result["CostoOperai"].'€</td>
+                <td>'.$result["CostoVenditori"].'€</td>
+                <td>'.$result["CostoProgettisti"].'€</td>
+                <td>'.$result["CostoARU"].'€</td>
             </tr>';
         }
         

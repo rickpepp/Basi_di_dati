@@ -28,6 +28,18 @@
                     case 3:
                         include '../libs/inserimento_licenziamento.php';
                         break;
+                    case 4:
+                        include '../libs/cerca_stampante.php';
+                        break;
+                    case 5:
+                        include '../libs/inserimento_manutenzione.php';
+                        break;
+                    case 6:
+                        include '../libs/inserimento_servizio.php';
+                        break;
+                    case 7:
+                        include '../libs/ricerca_ordine.php';
+                        break;
                 }
             ?>
         </main>

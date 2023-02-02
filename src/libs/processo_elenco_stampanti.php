@@ -1,0 +1,39 @@
+<?php
+    require_once 'database.php';
+    require_once 'bootstrap.php';
+    require_once 'functions.php';
+
+    sec_session_start();
+
+    if ($dbh -> login_check() && isset($_GET['marchio']) && isset($_GET['modello'])) {
+        echo '<div>
+                <table>
+                    <tr>
+                        <th>Marchio Produttore</th>
+                        <th>modello</th>
+                        <th>Numero Seriale</th>
+                        <th>Ore di Stampa</th>
+                        <th>Tipologia Stampa</th>
+                        <th>Manutenzione</th>
+                    </tr>';
+        
+        $risultati = $dbh -> get_stampanti($_GET['marchio'], $_GET['modello'], $_GET['seriale']);
+
+        foreach ($risultati as $result) {
+            echo '<tr>
+                <td>'.$result["MarchioProduzione"].'</td>
+                <td>'.$result["Modello"].'</td>
+                <td>'.$result["NumeroSeriale"].'</td>
+                <td>'.$result["OreStampa"].'</td>
+                <td>'.$result["TipologiaStampa"].'</td>
+                <td><img src="../img/modifica.png" alt="icona modifica" onclick="location.href=\'../views/visualizza_dati.php?action=3&id='.$result["CodiceStampante"].'\'"/></td>
+            </tr>';
+        }
+        
+        echo '</table>
+            <input type="button" value="Indietro" onclick="location.href=\'menu.php?r=1\';"><br>
+        </div>';
+        
+    }
+
+?>
