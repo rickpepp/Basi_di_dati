@@ -35,7 +35,7 @@
                                     echo "<a href='inserimento_dati.php?action=4'><li>Gestione manutenzione stampante</li></a><br>
                                     <a href='visualizza_dati.php?action=4'><li>Gestione servizi di post produzione</li></a><br>
                                     <a href='inserimento_dati.php?action=7'><li>Ricerca Ordine</li></a><br>
-                                    <a href=visualizza_dati.php?action=6'><li>Elenco Ordini da Spedire</li></a>";
+                                    <a href='visualizza_dati.php?action=6'><li>Elenco Ordini</li></a><br>";
                                     break;
                                 case 'venditore':
                                     echo "<li>Inserimento nuovo corriere</li><br>

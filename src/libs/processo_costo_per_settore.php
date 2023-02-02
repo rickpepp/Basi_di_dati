@@ -29,7 +29,7 @@
         }
         
         echo '</table>
-            <input type="button" value="Indietro" onclick="location.href=\'menu.php?r=1\';"><br>
+            <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
         </div>';
         
     }

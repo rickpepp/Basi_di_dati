@@ -30,7 +30,7 @@
                             <a href='../libs/cancella_contratto.php?CodiceContratto=".$_GET["CodiceContratto"]."'><li>Cancella Contratto</li></a><br>";
                         }                      
                     ?>
-                    <a href="../views/menu.php"><li>Torna Indietro</li></a>
+                    <a href="javascript:history.go(-1)"><li>Torna Indietro</li></a>
                 </ul>
             </div>
         </main>

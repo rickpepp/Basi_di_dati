@@ -33,6 +33,10 @@
                         break;
                     case 5:
                         include '../libs/processo_cerca_ordine.php';
+                        break;
+                    case 6:
+                        include '../libs/processo_ordini_non_spediti.php';
+                        break;
                 }
             ?>
         </main>

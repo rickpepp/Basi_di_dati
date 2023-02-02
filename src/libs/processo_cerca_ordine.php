@@ -59,13 +59,18 @@
             </tr>
             <tr>
                 <th>Spedizione</th>
-                <td><strong>Nominativo</strong>: '.$ordine["NomeCliente"].' '.$ordine["CognomeCliente"].'<br/><strong>Email</strong>: '.$ordine["Email"].'<br/><strong>Codice Fiscale</strong>: '.$ordine["CodiceFiscale"].'<br/><strong>Indirizzo</strong>: '.$ordine["Via"].' '.$ordine["NumeroCivico"].' '.$ordine["CAP"].' '.$ordine["Città"].'</td>
+                <td>';
+                $spedizioni = $dbh -> get_spedizione_ordine($ordine['CodiceOrdine']);
+                foreach($spedizioni as $spedizione) {
+                    echo '<strong>Codice Spedizione</strong>: '.$spedizione['CodiceSpedizione'].'<br/><strong>Data Spedizione</strong>: '.$spedizione['DataSpedizione'].'<br/><strong>Corriere</strong>: '.$spedizione['NomeCorriere'];
+                }
+                echo '</td>
             </tr>';
         }
         
         
         echo '</table>
-            <input type="button" value="Indietro" onclick="location.href=\'menu.php?r=1\';"><br>
+            <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
         </div>';
         
     }

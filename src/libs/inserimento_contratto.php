@@ -25,7 +25,7 @@
             <footer>
                 <p id="informazioni"></p>
                 <input type="button" value="Salva" id="rbutton" onclick="formhashr(this.form, this.form.check_password,\'registrazione\');"  disabled><br>
-                <input type="button" value="Indietro" onclick="location.href=\'menu.php?r=1\';"><br>
+                <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
             </footer>
         </form>'
 ?>

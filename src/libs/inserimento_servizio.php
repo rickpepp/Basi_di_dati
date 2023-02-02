@@ -14,7 +14,7 @@
     echo '<footer>
         <p id="informazioni"></p>
         <input type="submit" value="Inserisci" id="cerca"><br>
-        <input type="button" value="Indietro" onclick="location.href=\'menu.php?r=1\';"><br>
+        <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
     </footer>
 </form>'
 ?>

@@ -510,5 +510,24 @@
          }
       }
 
+      public function get_ordini_da_spedire() {
+         if($stmt = $this->db->prepare("SELECT CodiceOrdine, NomeFile, DataOrdine, Cliente.Nome AS NomeCliente, Cliente.Cognome AS CognomeCliente FROM Ordine, Cliente, Materiale, Stampante_3d, Venditore WHERE Materiale.CodiceMateriale = Ordine.Materiale AND Venditore.CodiceVenditore = Ordine.Venditore AND Stampante_3d.CodiceStampante = Ordine.Stampante AND Cliente.CodiceCliente = Ordine.Cliente ORDER BY DataOrdine DESC")) {
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+      }
+
+      public function get_spedizione_ordine($id) {
+         if($stmt = $this->db->prepare("SELECT CodiceSpedizione, DataSpedizione, NomeCorriere FROM Ordine, Spedizione, Corriere WHERE Spedizione.CodiceSpedizione = Ordine.Spedizione AND Corriere.CodiceCorriere = Spedizione.Corriere AND Ordine.CodiceOrdine = ?")) {
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+      }
+
     }
 ?>
