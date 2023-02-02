@@ -29,9 +29,7 @@
                                 case 'addettorisorseumane':
                                     echo "<a href='inserimento_dati.php?action=0'><li>Inserimento nuovo contratto di lavoro</li></a><br>
                                     <a href='visualizza_dati.php?action=1'><li>Costo dipendenti per settore</li></a><br>
-                                    <a href='inserimento_dati.php?action=2'><li>Riepilogo contratto dipendente</li></a><br>
-                                    <li>Licenziamento Dipendente</li><br>
-                                    <li>Aggiungi Telefono Dipendente</li><br>";
+                                    <a href='inserimento_dati.php?action=2'><li>Riepilogo e modifica contratto dipendente</li></a><br>";
                                     break;
                                 case 'operaio':
                                     echo "<li>Inserimento manutenzione stampante</li><br>

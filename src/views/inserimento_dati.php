@@ -19,8 +19,15 @@
                     case 0:
                         include '../libs/inserimento_contratto.php';
                         break;
+                    case 1:
+                        include '../libs/inserimento_numero_telefono.php';
+                        break;
                     case 2:
                         include '../libs/riepilogo_dipendente.php';
+                        break;
+                    case 3:
+                        include '../libs/inserimento_licenziamento.php';
+                        break;
                 }
             ?>
         </main>

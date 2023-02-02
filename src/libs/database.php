@@ -73,17 +73,18 @@
                               $stmt2 -> execute();
                               //Aggiunge Costo All'anno Economico
                               if ($stmt = $this -> db -> prepare("SELECT * FROM AnnoEconomico WHERE AnnoRiferimento = ?;")) {
-                                 $stmt -> bind_param('i', date("Y"));
+                                 $anno = substr($data_assunzione,0,4);
+                                 $stmt -> bind_param('s', $anno);
                                  $stmt -> execute();
                                  $stmt->store_result();
                                  if ($stmt -> num_rows == 0) {
                                     if ($stmt = $this -> db -> prepare("INSERT INTO AnnoEconomico (AnnoRiferimento) VALUES (?)")) {
-                                       $stmt -> bind_param('i', date("Y"));
+                                       $stmt -> bind_param('s', $anno);
                                        $stmt -> execute();
                                     }
                                  }
                                  if ($stmt = $this -> db -> prepare("UPDATE AnnoEconomico SET $costo = $costo + ? WHERE AnnoRiferimento = ?;")) {
-                                    $stmt -> bind_param('ii', $costo_registrazione, date("Y"));
+                                    $stmt -> bind_param('is', $costo_registrazione, $anno);
                                     $stmt -> execute();
                                     return true;
                                  }
@@ -137,22 +138,23 @@
                            $stmt1 -> bind_param('ii', $user_id, $numero_telefono);
                            $stmt1 -> execute();
                            //Aggiugne contratto di lavoro
-                           if ($stmt2 = $this -> db -> prepare("INSERT INTO contrattolavoro (DataAssunzione, CostoDipendente, LivelloContrattuale, Progettista, ARU_inserimento) VALUES (?, ?, ?, ?, ?)")) {
+                           if ($stmt2 = $this -> db -> prepare("INSERT INTO contrattolavoro (DataAssunzione, CostoDipendente, LivelloContrattuale, Progettista, ARU_inserimento) VALUES (?,  ?, ?, ?, ?)")) {
                               $stmt2 -> bind_param('siiii', $data_assunzione, $costo_registrazione, $livello_registrazione, $user_id, $ARU);
                               $stmt2 -> execute();
                               //Aggiunge Costo ad Anno Economico
                               if ($stmt = $this -> db -> prepare("SELECT * FROM AnnoEconomico WHERE AnnoRiferimento = ?;")) {
-                                 $stmt -> bind_param('i', date("Y"));
+                                 $anno = substr($data_assunzione,0,4);
+                                 $stmt -> bind_param('s', $anno);
                                  $stmt -> execute();
                                  $stmt->store_result();
                                  if ($stmt -> num_rows == 0) {
                                     if ($stmt = $this -> db -> prepare("INSERT INTO AnnoEconomico (AnnoRiferimento) VALUES (?)")) {
-                                       $stmt -> bind_param('i', date("Y"));
+                                       $stmt -> bind_param('s', $anno);
                                        $stmt -> execute();
                                     }
                                  }
                                  if ($stmt = $this -> db -> prepare("UPDATE AnnoEconomico SET CostoProgettisti = CostoProgettisti + ? WHERE AnnoRiferimento = ?;")) {
-                                    $stmt -> bind_param('ii', $costo_registrazione, date("Y"));
+                                    $stmt -> bind_param('is', $costo_registrazione, $anno);
                                     $stmt -> execute();
                                     return true;
                                  }
@@ -278,7 +280,7 @@
             return NULL;
          }
          
-         if ($stmt = $this->db->prepare("SELECT dipendente.$id AS id, dipendente.Nome, dipendente.Cognome, dipendente.Email, dipendente.CodiceFiscale, DataAssunzione, CostoDipendente, DataLicenziamento, LivelloContrattuale, addetto.Nome AS NomeAddetto, addetto.Cognome AS CognomeAddetto FROM $ruolo dipendente, addettorisorseumane addetto, contrattolavoro WHERE dipendente.Nome = ? AND dipendente.Cognome = ? AND addetto.CodiceARU = ARU_inserimento AND contrattolavoro.$contratto = dipendente.$id;")) {
+         if ($stmt = $this->db->prepare("SELECT dipendente.$id AS id, CodiceContratto, dipendente.Nome, dipendente.Cognome, dipendente.Email, dipendente.CodiceFiscale, DataAssunzione, CostoDipendente, DataLicenziamento, LivelloContrattuale, addetto.Nome AS NomeAddetto, addetto.Cognome AS CognomeAddetto FROM $ruolo dipendente, addettorisorseumane addetto, contrattolavoro WHERE dipendente.Nome = ? AND dipendente.Cognome = ? AND addetto.CodiceARU = ARU_inserimento AND contrattolavoro.$contratto = dipendente.$id;")) {
             $stmt->bind_param('ss', $nome, $cognome);
             $stmt->execute();
             $result=$stmt->get_result();
@@ -320,7 +322,53 @@
             $result->fetch_all(MYSQLI_ASSOC);
             return $result;
          }
+      }
 
+      //Aggiungi Numero Telefono
+      public function aggiungi_numero($numero_telefono,$ruolo,$id) {
+         if ($ruolo == 'AddettoRisorseUmane') {
+            $ruolo = 'NumeroTelefonoARU';
+            $nome_id = 'CodiceARU';
+         } else if ($ruolo == 'Operaio') {
+            $ruolo = 'NumeroTelefonoOperaio';
+            $nome_id = 'CodiceOperaio';
+         } else if ($ruolo == 'Progettista') {
+            $ruolo = 'NumeroTelefonoProgettista';
+            $nome_id = 'CodiceProgettista';
+         } else if ($ruolo == 'Venditore') {
+            $ruolo = 'NumeroTelefonoVenditore';
+            $nome_id = 'CodiceVenditore';
+         } 
+
+         if ($stmt = $this->db->prepare("INSERT $ruolo ($nome_id, NumeroTelefono) VALUES (?,?)")) {
+            $stmt->bind_param('ii', $id, $numero_telefono);
+            $stmt->execute();
+            return true;
+         } else {
+            return false;
+         }
+      }
+
+      //Cancella Contratto
+      public function cancella_contratto($id) {
+         if($stmt = $this->db->prepare("DELETE FROM ContrattoLavoro WHERE CodiceContratto = ?")) {
+            $stmt->bind_param('i', $id);
+            $stmt->execute();
+            return true;
+         } else {
+            return false;
+         }
+      }
+
+      //Aggiungi Data Licenziamento
+      public function aggiungi_licenziamento($id, $data) {
+         if($stmt = $this->db->prepare("UPDATE ContrattoLavoro SET DataLicenziamento = ? WHERE CodiceContratto = ?")) {
+            $stmt->bind_param('si', $data, $id);
+            $stmt->execute();
+            return true;
+         } else {
+            return false;
+         }
       }
 
     }

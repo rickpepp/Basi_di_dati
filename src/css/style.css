@@ -61,7 +61,8 @@ table {
     margin-right: auto;
     border-collapse: collapse;
     margin-top: 4%;
-    width: 80%;
+    width: 90%;
+    
 }
 
 select {
@@ -136,10 +137,11 @@ td, th {
 }
 
 div {
-    width: 90%;
+    width: 100%;
     background-color: #DAD7CD;
     border-radius: 25px;
 }
+
 
 ul {
     margin-top: 5%;
@@ -164,4 +166,27 @@ li {
 
 li:hover {
     box-shadow: 2px 2px 5px 5px rgba(0,0,0,0.3);
+}
+
+img {
+    max-width: 30px;
+    padding: 5px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+img:hover {
+    box-shadow: 3px 3px 3px grey;
+    transition: 0.3s;
+}
+
+@media (max-width: 1800px) {
+    main > div {
+        overflow-x: scroll;
+    }
+
+    table {
+        margin-left: 5%;
+        margin-right: 5%;
+    }
 }

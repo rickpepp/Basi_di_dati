@@ -1,5 +1,5 @@
 <?php
-    echo '<form action="../views/visualizza_dati.php?" method="get" name="riepilogo_dipendente">
+    echo '<form action="../views/visualizza_dati.php" method="get" name="riepilogo_dipendente">
     <h2>Cerca Dipendente</h2><br>
     <label>Nome<br><input type="text" name="nome"></label><br>
     <label>Cognome<br><input type="text" name="cognome"></label><br>
