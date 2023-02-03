@@ -29,7 +29,6 @@ h1 {
 main {
     margin: 20vh 8% 5% 8%;
     text-align: center;
-    height: 500%;
     display: flex;
     justify-content: space-between;
 }
@@ -75,7 +74,6 @@ table {
     border-collapse: collapse;
     margin-top: 4%;
     width: 90%;
-    
 }
 
 select {
@@ -123,7 +121,8 @@ td, th {
     font-size: 35px;
     color: #283618;
     margin: 0%;
-    margin-bottom: 2%;
+    margin-bottom: 30px;
+    margin-top: 30px;;
 }
 
 .centered input {

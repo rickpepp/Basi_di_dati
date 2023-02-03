@@ -1,3 +1,10 @@
+<?php 
+    if ($_GET['action'] == 11) {
+        include '../libs/grafico_dettagli_anno_economico1.php';
+    } else if ($_GET['action'] == 10) {
+        include '../libs/grafico_elenco_anni_economici1.php';
+    }
+?>
 <!DOCTYPE html>
 <html lang="it" id="menu">
     <head>
@@ -8,6 +15,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script type="text/javascript" src="../js/sha512.js"></script>
         <script type="text/javascript" src="../js/forms_registrazione.js"></script>
+        <?php 
+            if ($_GET['action'] == 11) {
+                include '../libs/grafico_dettagli_anno_economico2.php';
+            } else if ($_GET['action'] == 10) {
+                include '../libs/grafico_elenco_anni_economici2.php';
+            }
+        ?>
     </head>
     <body class="centered">
         <header>
@@ -49,6 +63,10 @@
                     case 10:
                         include '../libs/processo_elenco_anni_economici.php';
                         break;
+                    case 11:
+                        include '../libs/processo_dettagli_anno_economico.php';
+                        break;
+
                 }
             ?>
         </main>

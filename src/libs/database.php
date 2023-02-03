@@ -667,5 +667,15 @@
          }
       }
 
+      public function get_anno_economico($anno) {
+         if($stmt = $this->db->prepare("SELECT *, (CostoProgettisti + CostoVenditori + CostoOperai + CostoARU + CostoStampanti + CostoMateriale) AS Uscite, (EntrateProgettazione + EntrateProduzione + EntrateServizi) AS Entrate FROM AnnoEconomico WHERE AnnoRiferimento = ?")) {
+            $stmt->bind_param('s', $anno);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+      }
+
     }
 ?>

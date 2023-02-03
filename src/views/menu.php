@@ -43,7 +43,7 @@
                                     <a href='inserimento_dati.php?action=10'><li>Gestione Materiali</li></a><br>
                                     <a href='visualizza_dati.php?action=10'><li>Utile annuale</li></a><br>
                                     <script>
-                                        document.getElementById('menu').style.height = '120%';
+                                        document.getElementById('menu').style.height = '140%';
                                     </script>";
                                     break;
                             }
