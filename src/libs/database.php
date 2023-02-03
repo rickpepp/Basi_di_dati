@@ -373,24 +373,31 @@
 
       //Cerca Stampanti
       public function get_stampanti($marchio, $modello, $seriale) {
-         if ($modello == '') {
-            if($stmt = $this->db->prepare("SELECT * FROM Stampante_3d WHERE MarchioProduzione = ?")) {
+         if ($modello == '' && $marchio != '') {
+            if($stmt = $this->db->prepare("SELECT CodiceStampante, MarchioProduzione, Modello, NumeroSeriale, OreStampa, TipologiaStampa, DataAcquisto, PrezzoAcquisto, Nome, Cognome FROM Stampante_3d, Acquisto, Venditore WHERE MarchioProduzione = ? AND Acquisto.Stampante = Stampante_3d.CodiceStampante AND Venditore.CodiceVenditore = Acquisto.Venditore")) {
                $stmt->bind_param('s', $marchio);
                $stmt->execute();
                $result=$stmt->get_result();
                $result->fetch_all(MYSQLI_ASSOC);
                return $result;
             }
-         } else if ($seriale == '') {
-            if($stmt = $this->db->prepare("SELECT * FROM Stampante_3d WHERE MarchioProduzione = ? AND Modello = ?")) {
+         } else if ($seriale == '' && $modello != '') {
+            if($stmt = $this->db->prepare("SELECT CodiceStampante, MarchioProduzione, Modello, NumeroSeriale, OreStampa, TipologiaStampa, DataAcquisto, PrezzoAcquisto, Nome, Cognome FROM Stampante_3d, Acquisto, Venditore WHERE MarchioProduzione = ? AND Acquisto.Stampante = Stampante_3d.CodiceStampante AND Venditore.CodiceVenditore = Acquisto.Venditore AND Modello = ?")) {
                $stmt->bind_param('ss', $marchio, $modello);
                $stmt->execute();
                $result=$stmt->get_result();
                $result->fetch_all(MYSQLI_ASSOC);
                return $result;
             }
+         } else if ($marchio == '' && $modello == '' && $seriale == '') {
+            if($stmt = $this->db->prepare("SELECT CodiceStampante, MarchioProduzione, Modello, NumeroSeriale, OreStampa, TipologiaStampa, DataAcquisto, PrezzoAcquisto, Nome, Cognome FROM Stampante_3d, Acquisto, Venditore WHERE Acquisto.Stampante = Stampante_3d.CodiceStampante AND Venditore.CodiceVenditore = Acquisto.Venditore")) {
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
          } else {
-            if($stmt = $this->db->prepare("SELECT * FROM Stampante_3d WHERE MarchioProduzione = ? AND Modello = ? AND NumeroSeriale = ?")) {
+            if($stmt = $this->db->prepare("SELECT CodiceStampante, MarchioProduzione, Modello, NumeroSeriale, OreStampa, TipologiaStampa, DataAcquisto, PrezzoAcquisto, Nome, Cognome FROM Stampante_3d, Acquisto, Venditore WHERE Acquisto.Stampante = Stampante_3d.CodiceStampante AND Venditore.CodiceVenditore = Acquisto.Venditore AND MarchioProduzione = ? AND Modello = ? AND NumeroSeriale = ?")) {
                $stmt->bind_param('sss', $marchio, $modello, $seriale);
                $stmt->execute();
                $result=$stmt->get_result();
@@ -483,20 +490,47 @@
          if($stmt = $this->db->prepare("INSERT compimento (Operaio, Servizio) VALUES (?, ?)")) {
             $stmt->bind_param('ii', $id_operaio, $id_servizio);
             $stmt->execute();
-            
             return true;
          } else {
             return false;
          }
       }
 
-      public function get_ordine($id) {
-         if($stmt = $this->db->prepare("SELECT CodiceOrdine, NomeFile, TempoRichiesto, DataOrdine, QuantitàMateriale, Costo, Materiale.NomeMateriale, Materiale.MarchioProduttore AS MaterialeProduttore, Venditore.Nome AS NomeVenditore, Venditore.Cognome AS CognomeVenditore, Stampante_3d.MarchioProduzione AS MarchioStampante, Stampante_3d.Modello, Stampante_3d.NumeroSeriale, Cliente.Nome AS NomeCliente, Cliente.Cognome AS CognomeCliente, Cliente.Email, Cliente.CodiceFiscale, Cliente.Via, Cliente.NumeroCivico, Cliente.CAP, Cliente.Città FROM Ordine, Cliente, Materiale, Stampante_3d, Venditore WHERE Materiale.CodiceMateriale = Ordine.Materiale AND Venditore.CodiceVenditore = Ordine.Venditore AND Stampante_3d.CodiceStampante = Ordine.Stampante AND Cliente.CodiceCliente = Ordine.Cliente AND CodiceOrdine = ?")) {
-            $stmt->bind_param('i', $id);
-            $stmt->execute();
-            $result=$stmt->get_result();
-            $result->fetch_all(MYSQLI_ASSOC);
-            return $result;
+      public function get_ordine($id, $nome, $cognome) {
+         if ($id == '' && $nome == '' && $cognome == '') {
+            return $this -> get_ordini();
+         } else if ($id != '') {
+            if ($stmt = $this->db->prepare("SELECT CodiceOrdine, NomeFile, TempoRichiesto, DataOrdine, QuantitàMateriale, Costo, Materiale.NomeMateriale, Materiale.MarchioProduttore AS MaterialeProduttore, Venditore.Nome AS NomeVenditore, Venditore.Cognome AS CognomeVenditore, Stampante_3d.MarchioProduzione AS MarchioStampante, Stampante_3d.Modello, Stampante_3d.NumeroSeriale, Cliente.Nome AS NomeCliente, Cliente.Cognome AS CognomeCliente, Cliente.Email, Cliente.CodiceFiscale, Cliente.Via, Cliente.NumeroCivico, Cliente.CAP, Cliente.Città FROM Ordine, Cliente, Materiale, Stampante_3d, Venditore WHERE Materiale.CodiceMateriale = Ordine.Materiale AND Venditore.CodiceVenditore = Ordine.Venditore AND Stampante_3d.CodiceStampante = Ordine.Stampante AND Cliente.CodiceCliente = Ordine.Cliente AND CodiceOrdine = ?")) {
+               $stmt->bind_param('i', $id);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else if ($nome != '' && $cognome == '') {
+            if ($stmt = $this->db->prepare("SELECT CodiceOrdine, NomeFile, TempoRichiesto, DataOrdine, QuantitàMateriale, Costo, Materiale.NomeMateriale, Materiale.MarchioProduttore AS MaterialeProduttore, Venditore.Nome AS NomeVenditore, Venditore.Cognome AS CognomeVenditore, Stampante_3d.MarchioProduzione AS MarchioStampante, Stampante_3d.Modello, Stampante_3d.NumeroSeriale, Cliente.Nome AS NomeCliente, Cliente.Cognome AS CognomeCliente, Cliente.Email, Cliente.CodiceFiscale, Cliente.Via, Cliente.NumeroCivico, Cliente.CAP, Cliente.Città FROM Ordine, Cliente, Materiale, Stampante_3d, Venditore WHERE Materiale.CodiceMateriale = Ordine.Materiale AND Venditore.CodiceVenditore = Ordine.Venditore AND Stampante_3d.CodiceStampante = Ordine.Stampante AND Cliente.CodiceCliente = Ordine.Cliente AND Cliente.Nome = ?")) {
+               $stmt->bind_param('s', $nome);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else if ($nome == '' && $cognome != '') {
+            if ($stmt = $this->db->prepare("SELECT CodiceOrdine, NomeFile, TempoRichiesto, DataOrdine, QuantitàMateriale, Costo, Materiale.NomeMateriale, Materiale.MarchioProduttore AS MaterialeProduttore, Venditore.Nome AS NomeVenditore, Venditore.Cognome AS CognomeVenditore, Stampante_3d.MarchioProduzione AS MarchioStampante, Stampante_3d.Modello, Stampante_3d.NumeroSeriale, Cliente.Nome AS NomeCliente, Cliente.Cognome AS CognomeCliente, Cliente.Email, Cliente.CodiceFiscale, Cliente.Via, Cliente.NumeroCivico, Cliente.CAP, Cliente.Città FROM Ordine, Cliente, Materiale, Stampante_3d, Venditore WHERE Materiale.CodiceMateriale = Ordine.Materiale AND Venditore.CodiceVenditore = Ordine.Venditore AND Stampante_3d.CodiceStampante = Ordine.Stampante AND Cliente.CodiceCliente = Ordine.Cliente AND Cliente.Cognome = ?")) {
+               $stmt->bind_param('s', $cognome);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else {
+            if ($stmt = $this->db->prepare("SELECT CodiceOrdine, NomeFile, TempoRichiesto, DataOrdine, QuantitàMateriale, Costo, Materiale.NomeMateriale, Materiale.MarchioProduttore AS MaterialeProduttore, Venditore.Nome AS NomeVenditore, Venditore.Cognome AS CognomeVenditore, Stampante_3d.MarchioProduzione AS MarchioStampante, Stampante_3d.Modello, Stampante_3d.NumeroSeriale, Cliente.Nome AS NomeCliente, Cliente.Cognome AS CognomeCliente, Cliente.Email, Cliente.CodiceFiscale, Cliente.Via, Cliente.NumeroCivico, Cliente.CAP, Cliente.Città FROM Ordine, Cliente, Materiale, Stampante_3d, Venditore WHERE Materiale.CodiceMateriale = Ordine.Materiale AND Venditore.CodiceVenditore = Ordine.Venditore AND Stampante_3d.CodiceStampante = Ordine.Stampante AND Cliente.CodiceCliente = Ordine.Cliente AND Cliente.Cognome = ? AND Cliente.Nome = ?")) {
+               $stmt->bind_param('ss', $cognome, $nome);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
          }
       }
 
@@ -510,7 +544,7 @@
          }
       }
 
-      public function get_ordini_da_spedire() {
+      public function get_ordini() {
          if($stmt = $this->db->prepare("SELECT CodiceOrdine, NomeFile, DataOrdine, Cliente.Nome AS NomeCliente, Cliente.Cognome AS CognomeCliente FROM Ordine, Cliente, Materiale, Stampante_3d, Venditore WHERE Materiale.CodiceMateriale = Ordine.Materiale AND Venditore.CodiceVenditore = Ordine.Venditore AND Stampante_3d.CodiceStampante = Ordine.Stampante AND Cliente.CodiceCliente = Ordine.Cliente ORDER BY DataOrdine DESC")) {
             $stmt->execute();
             $result=$stmt->get_result();
@@ -522,6 +556,110 @@
       public function get_spedizione_ordine($id) {
          if($stmt = $this->db->prepare("SELECT CodiceSpedizione, DataSpedizione, NomeCorriere FROM Ordine, Spedizione, Corriere WHERE Spedizione.CodiceSpedizione = Ordine.Spedizione AND Corriere.CodiceCorriere = Spedizione.Corriere AND Ordine.CodiceOrdine = ?")) {
             $stmt->bind_param('i', $id);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+      }
+
+      public function get_corrieri() {
+         if($stmt = $this->db->prepare("SELECT * FROM Corriere")) {
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+      }
+
+      public function aggiungi_corriere($nome) {
+         if($stmt = $this->db->prepare("INSERT Corriere (NomeCorriere) VALUES (?)")) {
+            $stmt->bind_param('s', $nome);
+            $stmt->execute();
+            return true;
+         } else {
+            return false;
+         }
+      }
+
+      public function aggiungi_stampante($produttore, $modello, $seriale, $tipologia, $data, $prezzo, $venditore) {
+         if($stmt = $this->db->prepare("INSERT Stampante_3d (MarchioProduzione, Modello, NumeroSeriale, TipologiaStampa) VALUES (?, ?, ?, ?)")) {
+            $stmt->bind_param('ssss', $produttore, $modello, $seriale, $tipologia);
+            $stmt->execute();
+            if ($stmt = $this -> db -> prepare("SELECT MAX(CodiceStampante) FROM Stampante_3d")) {
+               $stmt -> execute();
+               $stmt -> store_result();
+               $stmt -> bind_result($id_stampante);
+               $stmt -> fetch();
+               if ($stmt = $this->db->prepare("INSERT Acquisto (Stampante, DataAcquisto, PrezzoAcquisto, Venditore) VALUES (?, ?, ?, ?)")) {
+                  $stmt->bind_param('isss', $id_stampante, $data, $prezzo, $venditore);
+                  $stmt->execute();
+                  //Aggiunge Costo All'anno Economico
+                  if ($stmt = $this -> db -> prepare("SELECT * FROM AnnoEconomico WHERE AnnoRiferimento = ?;")) {
+                     $anno = substr($data,0,4);
+                     $stmt -> bind_param('s', $anno);
+                     $stmt -> execute();
+                     $stmt->store_result();
+                     if ($stmt -> num_rows == 0) {
+                        if ($stmt = $this -> db -> prepare("INSERT INTO AnnoEconomico (AnnoRiferimento) VALUES (?)")) {
+                           $stmt -> bind_param('s', $anno);
+                           $stmt -> execute();
+                        } else {
+                           return false;
+                        }
+                     }
+                     if ($stmt = $this -> db -> prepare("UPDATE AnnoEconomico SET CostoStampanti = CostoStampanti + ? WHERE AnnoRiferimento = ?;")) {
+                        $stmt -> bind_param('is', $prezzo, $anno);
+                        $stmt -> execute();
+                        return true;
+                     } else {
+                        return false;
+                     }
+                  } else {
+                     return false;
+                  }
+               } else {
+                  return false;
+               }
+            } else {
+               return false;
+            }
+         } else {
+            return false;
+         }
+      }
+
+      public function get_materiali($materiale) {
+         if ($materiale == '') {
+            if($stmt = $this->db->prepare("SELECT * FROM Materiale")) {
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else {
+            if($stmt = $this->db->prepare("SELECT * FROM Materiale WHERE NomeMateriale = ?")) {
+               $stmt->bind_param('s', $materiale);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         }
+      }
+
+      public function get_acquisti_materiale($materiale) {
+         if($stmt = $this->db->prepare("SELECT AcquistoMateriale.DataAcquisto, Fornitura.PrezzoAcquisto, Venditore.Nome, Venditore.Cognome FROM AcquistoMateriale, Fornitura, Venditore WHERE Fornitura.Materiale = ? AND AcquistoMateriale.CodiceAcquisto = Fornitura.Acquisto AND Venditore.CodiceVenditore = AcquistoMateriale.Venditore")) {
+            $stmt->bind_param('s', $materiale);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+      }
+
+      public function get_anni_economici() {
+         if($stmt = $this->db->prepare("SELECT AnnoRiferimento, (CostoProgettisti + CostoVenditori + CostoOperai + CostoARU + CostoStampanti + CostoMateriale) AS Uscite, (EntrateProgettazione + EntrateProduzione + EntrateServizi) AS Entrate FROM AnnoEconomico ORDER BY AnnoRiferimento DESC")) {
             $stmt->execute();
             $result=$stmt->get_result();
             $result->fetch_all(MYSQLI_ASSOC);

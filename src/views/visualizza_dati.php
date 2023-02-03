@@ -23,7 +23,7 @@
                         include '../libs/processo_costo_per_settore.php';
                         break;
                     case 2:
-                        include '../libs/processo_elenco_stampanti.php';
+                        include '../libs/processo_elenco_stampante.php';
                         break;
                     case 3:
                         include '../libs/processo_elenco_manutenzione.php';
@@ -35,7 +35,19 @@
                         include '../libs/processo_cerca_ordine.php';
                         break;
                     case 6:
-                        include '../libs/processo_ordini_non_spediti.php';
+                        include '../libs/processo_ordini.php';
+                        break;
+                    case 7:
+                        include '../libs/processo_elenco_corriere.php';
+                        break;
+                    case 8:
+                        include '../libs/processo_elenco_materiali.php';
+                        break;
+                    case 9:
+                        include '../libs/processo_acquisti_materiale.php';
+                        break;
+                    case 10:
+                        include '../libs/processo_elenco_anni_economici.php';
                         break;
                 }
             ?>

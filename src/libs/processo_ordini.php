@@ -16,7 +16,7 @@
                         <th>Ulteriori Informazioni</th>
                     </tr>';
         
-        $ordini = $dbh -> get_ordini_da_spedire();
+        $ordini = $dbh -> get_ordine($_GET['id'],$_GET['nome'],$_GET['cognome']);
 
         foreach ($ordini as $ordine) {
             echo '<tr>
@@ -29,8 +29,11 @@
         }
         
         
-        echo '</table>
-            <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
+        echo '</table>';
+        if ($_SESSION['ruolo'] == 'venditore') {
+            echo ' <input type="button" value="Aggiungi" onclick="location.href=\'../views/inserimento_dati.php?action=10\';"/><br/>';
+        }
+        echo '<input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
         </div>';
         
     }

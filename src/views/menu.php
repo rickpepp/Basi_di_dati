@@ -34,21 +34,16 @@
                                 case 'operaio':
                                     echo "<a href='inserimento_dati.php?action=4'><li>Gestione manutenzione stampante</li></a><br>
                                     <a href='visualizza_dati.php?action=4'><li>Gestione servizi di post produzione</li></a><br>
-                                    <a href='inserimento_dati.php?action=7'><li>Ricerca Ordine</li></a><br>
-                                    <a href='visualizza_dati.php?action=6'><li>Elenco Ordini</li></a><br>";
+                                    <a href='inserimento_dati.php?action=7'><li>Gestione Ordini</li></a><br>";
                                     break;
                                 case 'venditore':
-                                    echo "<li>Inserimento nuovo corriere</li><br>
-                                    <li>Inserimento nuovo ordine</li><br>
-                                    <li>Inserimento nuova spedizione</li><br>
-                                    <li>Inserimento nuovo materiale</li><br>
-                                    <li>Acquisto materiale esistente</li><br>
-                                    <li>Acquisto nuova stampante</li><br>
-                                    <li>Riepilogo ordini cliente</li><br>
-                                    <li>Riepilogo ordine specifico</li><br>
-                                    <li>Utile annuale</li><br>
+                                    echo "<a href='visualizza_dati.php?action=7'><li>Gestione Corrieri</li></a><br>
+                                    <a href='inserimento_dati.php?action=4'><li>Gestione Stampanti</li></a><br>
+                                    <a href='inserimento_dati.php?action=7'><li>Gestione Ordini</li></a><br>
+                                    <a href='inserimento_dati.php?action=10'><li>Gestione Materiali</li></a><br>
+                                    <a href='visualizza_dati.php?action=10'><li>Utile annuale</li></a><br>
                                     <script>
-                                        document.getElementById('menu').style.height = '140%';
+                                        document.getElementById('menu').style.height = '120%';
                                     </script>";
                                     break;
                             }

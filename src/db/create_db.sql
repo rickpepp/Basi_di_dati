@@ -129,11 +129,12 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.Stampante_3D (
 );
 
 CREATE TABLE IF NOT EXISTS Printing_Farm.Acquisto (
-    Stampante INT NOT NULL PRIMARY KEY,
+    CodiceAcquisto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    Stampante INT NOT NULL,
     DataAcquisto DATE NOT NULL,
     PrezzoAcquisto FLOAT NOT NULL,
     Venditore INT NOT NULL,
-    CHECK (PrezzoAcquisto>0),
+    CHECK (PrezzoAcquisto>=0),
     CONSTRAINT fk_Acquisto_Stampante
         FOREIGN KEY (Stampante) 
         REFERENCES Printing_Farm.Stampante_3D(CodiceStampante)
@@ -178,9 +179,7 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.Materiale (
 CREATE TABLE IF NOT EXISTS Printing_Farm.AcquistoMateriale (
     CodiceAcquisto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     DataAcquisto DATE NOT NULL,
-    PrezzoAcquisto FLOAT NOT NULL,
     Venditore INT NOT NULL,
-    CHECK (PrezzoAcquisto>0),
     CONSTRAINT fk_AcquistoMateriale_Venditore
         FOREIGN KEY (Venditore) 
         REFERENCES Printing_Farm.Venditore(CodiceVenditore)
@@ -191,6 +190,8 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.AcquistoMateriale (
 CREATE TABLE IF NOT EXISTS Printing_Farm.Fornitura (
     Acquisto INT NOT NULL,
     Materiale INT NOT NULL,
+    PrezzoAcquisto FLOAT NOT NULL,
+    CHECK (PrezzoAcquisto>0),
     CONSTRAINT fk_Fornitura_Acquisto
         FOREIGN KEY (Acquisto) 
         REFERENCES Printing_Farm.AcquistoMateriale(CodiceAcquisto)

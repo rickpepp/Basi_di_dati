@@ -166,15 +166,15 @@ INSERT INTO `Compimento` (`Operaio`,`Servizio`) VALUES
 
 
 
-INSERT INTO `AcquistoMateriale` (`DataAcquisto`,`PrezzoAcquisto`,`Venditore`) VALUES 
-('2023-09-18','300','1'),
-('2023-09-18','500','1');
+INSERT INTO `AcquistoMateriale` (`DataAcquisto`,`Venditore`) VALUES 
+('2023-09-18','1'),
+('2023-09-18','1');
 
 
 
-INSERT INTO `Fornitura` (`Acquisto`,`Materiale`) VALUES 
-('1','1'),
-('2','2');
+INSERT INTO `Fornitura` (`Acquisto`,`Materiale`,`PrezzoAcquisto`) VALUES 
+('1','1','500'),
+('2','2','300');
 
 
 

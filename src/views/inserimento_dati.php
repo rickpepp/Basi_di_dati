@@ -29,7 +29,7 @@
                         include '../libs/inserimento_licenziamento.php';
                         break;
                     case 4:
-                        include '../libs/cerca_stampante.php';
+                        include '../libs/ricerca_stampante.php';
                         break;
                     case 5:
                         include '../libs/inserimento_manutenzione.php';
@@ -39,6 +39,15 @@
                         break;
                     case 7:
                         include '../libs/ricerca_ordine.php';
+                        break;
+                    case 8:
+                        include '../libs/inserimento_corriere.php';
+                        break;
+                    case 9:
+                        include '../libs/inserimento_stampante.php';
+                        break;
+                    case 10:
+                        include '../libs/ricerca_materiale.php';
                         break;
                 }
             ?>

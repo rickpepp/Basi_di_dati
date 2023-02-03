@@ -14,6 +14,7 @@
                         <th>Numero Seriale</th>
                         <th>Ore di Stampa</th>
                         <th>Tipologia Stampa</th>
+                        <th>Dati di Acquisto</th>
                         <th>Manutenzione</th>
                     </tr>';
         
@@ -26,12 +27,17 @@
                 <td>'.$result["NumeroSeriale"].'</td>
                 <td>'.$result["OreStampa"].'</td>
                 <td>'.$result["TipologiaStampa"].'</td>
+                <td>'.$result["DataAcquisto"].'<br/>'.$result["PrezzoAcquisto"].' €<br/>'.$result["Nome"].' '.$result["Cognome"].'</td>
                 <td><img src="../img/modifica.png" alt="icona modifica" onclick="location.href=\'../views/visualizza_dati.php?action=3&id='.$result["CodiceStampante"].'\'"/></td>
             </tr>';
         }
         
-        echo '</table>
-            <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
+        echo '</table>';
+        if ($_SESSION['ruolo'] == 'venditore') {
+            echo ' <input type="button" value="Aggiungi" onclick="location.href=\'../views/inserimento_dati.php?action=9\';"/><br/>';
+        }
+           
+        echo '<input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
         </div>';
         
     }
