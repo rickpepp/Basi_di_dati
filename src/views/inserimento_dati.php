@@ -49,6 +49,15 @@
                     case 10:
                         include '../libs/ricerca_materiale.php';
                         break;
+                    case 11:
+                        include '../libs/inserimento_spedizione.php';
+                        break;
+                    case 12:
+                        include '../libs/inserimento_nuovo_materiale.php';
+                        break;
+                    case 13:
+                        include '../libs/inserimento_acquisto_materiale.php';
+                        break;
                 }
             ?>
         </main>

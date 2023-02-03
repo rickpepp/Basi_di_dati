@@ -88,14 +88,16 @@ INSERT INTO `NumeroTelefonoCliente` (`CodiceCliente`,`NumeroTelefono`) VALUES
 
 
 INSERT INTO `AnnoEconomico` (`AnnoRiferimento`,`CostoProgettisti`,`CostoVenditori`,`CostoOperai`,`CostoARU`,`CostoStampanti`,`CostoMateriale`,`EntrateProgettazione`,`EntrateProduzione`,`EntrateServizi`) VALUES
-('2023','40000','75000','40000','70000','5000','5000','30000','45000','5000'),
-('2022','20000','70000','25000','60000','5000','8000','30000','45000','4000'),
-('2021','15000','75000','40000','80000','2000','5000','15000','15000','1000');
+('2023','40000','45000','40000','30000','200','500','9000','150000','9000'),
+('2022','20000','35000','35000','25000','300','400','2500','110000','7000'),
+('2021','15000','30000','30000','25000','600','300','2000','90000','5000');
 
 
 
 INSERT INTO `Stampante_3d` (`MarchioProduzione`,`Modello`,`NumeroSeriale`,`TipologiaStampa`,`OreStampa`) VALUES 
 ('Creality','Ender 3 Pro','4ZKgbxU6qO','Filamento','1'),
+('Creality','Ender 3 Pro','sdasdw3423','Filamento','0'),
+('Creality','Ender 3 Pro','3453dfd23d','Filamento','0'),
 ('Creality','Ender 3','nhQXyUW0K2','Filamento','120');
 
 ALTER TABLE `Stampante_3d`
@@ -104,8 +106,10 @@ MODIFY `CodiceStampante` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 
 INSERT INTO `Acquisto` (`Stampante`,`DataAcquisto`,`PrezzoAcquisto`,`Venditore`) VALUES 
-('1','2023-09-18','300','1'),
-('2','2023-09-18','500','1');
+('1','2021-09-18','300','1'),
+('2','2021-09-18','300','1'),
+('3','2022-09-18','300','1'),
+('4','2023-09-18','200','1');
 
 
 
@@ -166,15 +170,9 @@ INSERT INTO `Compimento` (`Operaio`,`Servizio`) VALUES
 
 
 
-INSERT INTO `AcquistoMateriale` (`DataAcquisto`,`Venditore`) VALUES 
-('2023-09-18','1'),
-('2023-09-18','1');
-
-
-
-INSERT INTO `Fornitura` (`Acquisto`,`Materiale`,`PrezzoAcquisto`) VALUES 
-('1','1','500'),
-('2','2','300');
+INSERT INTO `AcquistoMateriale` (`DataAcquisto`,`Venditore`,`PrezzoAcquisto`,`Materiale`,`Quantità`) VALUES 
+('2023-09-18','1','500','1','1'),
+('2023-09-18','1','300','2','2');
 
 
 

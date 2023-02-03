@@ -24,7 +24,7 @@
                     <td>'.$ordine['NomeFile'].'</td>
                     <td>'.$ordine['DataOrdine'].'</td>
                     <td>'.$ordine['NomeCliente'].' '.$ordine['CognomeCliente'].'</td>
-                    <td><img src="../img/modifica.png" alt="icona modifica" onclick="location.href=\'../views/visualizza_dati.php?action=5&id='.$ordine["CodiceOrdine"].'\'"/></td>
+                    <td><img src="../img/modifica.png" alt="icona modifica" onclick="location.href=\'../views/visualizza_dati.php?action=5&nome=&cognome=&id='.$ordine["CodiceOrdine"].'\'"/></td>
                 </tr>';
         }
         

@@ -41,9 +41,9 @@
                                     <a href='inserimento_dati.php?action=4'><li>Gestione Stampanti</li></a><br>
                                     <a href='inserimento_dati.php?action=7'><li>Gestione Ordini</li></a><br>
                                     <a href='inserimento_dati.php?action=10'><li>Gestione Materiali</li></a><br>
-                                    <a href='visualizza_dati.php?action=10'><li>Utile annuale</li></a><br>
+                                    <a href='visualizza_dati.php?action=10'><li>Resoconti Economici</li></a><br>
                                     <script>
-                                        document.getElementById('menu').style.height = '140%';
+                                        document.getElementById('menu').style.height = '120%';
                                     </script>";
                                     break;
                             }

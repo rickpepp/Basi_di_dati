@@ -554,7 +554,7 @@
       }
 
       public function get_spedizione_ordine($id) {
-         if($stmt = $this->db->prepare("SELECT CodiceSpedizione, DataSpedizione, NomeCorriere FROM Ordine, Spedizione, Corriere WHERE Spedizione.CodiceSpedizione = Ordine.Spedizione AND Corriere.CodiceCorriere = Spedizione.Corriere AND Ordine.CodiceOrdine = ?")) {
+         if($stmt = $this->db->prepare("SELECT CodiceTracciamento, DataSpedizione, NomeCorriere FROM Ordine, Spedizione, Corriere WHERE Spedizione.CodiceSpedizione = Ordine.Spedizione AND Corriere.CodiceCorriere = Spedizione.Corriere AND Ordine.CodiceOrdine = ?")) {
             $stmt->bind_param('i', $id);
             $stmt->execute();
             $result=$stmt->get_result();
@@ -649,7 +649,7 @@
       }
 
       public function get_acquisti_materiale($materiale) {
-         if($stmt = $this->db->prepare("SELECT AcquistoMateriale.DataAcquisto, Fornitura.PrezzoAcquisto, Venditore.Nome, Venditore.Cognome FROM AcquistoMateriale, Fornitura, Venditore WHERE Fornitura.Materiale = ? AND AcquistoMateriale.CodiceAcquisto = Fornitura.Acquisto AND Venditore.CodiceVenditore = AcquistoMateriale.Venditore")) {
+         if($stmt = $this->db->prepare("SELECT DataAcquisto, PrezzoAcquisto, Quantità, Venditore.Nome, Venditore.Cognome FROM AcquistoMateriale, Venditore WHERE AcquistoMateriale.Materiale = ? AND Venditore.CodiceVenditore = AcquistoMateriale.Venditore")) {
             $stmt->bind_param('s', $materiale);
             $stmt->execute();
             $result=$stmt->get_result();
@@ -674,6 +674,78 @@
             $result=$stmt->get_result();
             $result->fetch_all(MYSQLI_ASSOC);
             return $result;
+         }
+      }
+
+      public function aggiungi_spedizione($tracciamento, $corriere, $data, $id_ordine, $id_venditore) {
+         if($stmt = $this->db->prepare("INSERT Spedizione (CodiceTracciamento, DataSpedizione, Venditore, corriere) VALUES (?, ?, ?, ?)")) {
+            $stmt->bind_param('ssii', $tracciamento, $data, $id_venditore, $corriere);
+            $stmt->execute();
+            if ($stmt = $this -> db -> prepare("SELECT MAX(CodiceSpedizione) FROM Spedizione")) {
+               $stmt -> execute();
+               $stmt -> store_result();
+               $stmt -> bind_result($id_spedizione);
+               $stmt -> fetch();
+               if ($stmt = $this -> db -> prepare("UPDATE Ordine SET Spedizione = ? WHERE CodiceOrdine = ?;")) {
+                  $stmt -> bind_param('ii', $id_spedizione, $id_ordine);
+                  $stmt -> execute();
+                  return true;
+               } else {
+                  return false;
+               }
+            } else {
+               return false;
+            }
+         } else {
+            return false;
+         }
+      }
+
+      public function aggiungi_nuovo_materiale($nome, $produttore, $peso, $tipologia) {
+         if($stmt = $this->db->prepare("INSERT Materiale (NomeMateriale, MarchioProduttore, PesoUnità, Tipologia) VALUES (?, ?, ?, ?)")) {
+            $stmt->bind_param('ssis', $nome, $produttore, $peso, $tipologia);
+            $stmt->execute();
+            return true;
+         } else {
+            return false;
+         }
+      }
+
+      public function aggiungi_acquisto_materiale($quantità, $data, $prezzo, $materiale, $venditore) {
+         if($stmt = $this->db->prepare("INSERT AcquistoMateriale (DataAcquisto, Venditore, PrezzoAcquisto, Materiale, Quantità) VALUES (?, ?, ?, ?, ?)")) {
+            $stmt->bind_param('siiii', $data, $venditore, $prezzo, $materiale, $quantità);
+            $stmt->execute();
+            if ($stmt = $this -> db -> prepare("UPDATE Materiale SET UnitàMagazzino = UnitàMagazzino + ? WHERE CodiceMateriale = ?;")) {
+               $stmt -> bind_param('ii', $quantità, $materiale);
+               $stmt -> execute();
+               if ($stmt = $this -> db -> prepare("SELECT * FROM AnnoEconomico WHERE AnnoRiferimento = ?;")) {
+                  $anno = substr($data,0,4);
+                  $stmt -> bind_param('s', $anno);
+                  $stmt -> execute();
+                  $stmt->store_result();
+                  if ($stmt -> num_rows == 0) {
+                     if ($stmt = $this -> db -> prepare("INSERT INTO AnnoEconomico (AnnoRiferimento) VALUES (?)")) {
+                        $stmt -> bind_param('s', $anno);
+                        $stmt -> execute();
+                     } else {
+                        return false;
+                     }
+                  }
+                  if ($stmt = $this -> db -> prepare("UPDATE AnnoEconomico SET CostoMateriale = CostoMateriale + (? * ?) WHERE AnnoRiferimento = ?;")) {
+                     $stmt -> bind_param('iis', $prezzo, $quantità, $anno);
+                     $stmt -> execute();
+                     return true;
+                  } else {
+                     return false;
+                  }
+               } else {
+                  return false;
+               }
+            } else {
+               return false;
+            }
+         } else {
+            return false;
          }
       }
 

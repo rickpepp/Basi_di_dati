@@ -180,24 +180,11 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.AcquistoMateriale (
     CodiceAcquisto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     DataAcquisto DATE NOT NULL,
     Venditore INT NOT NULL,
-    CONSTRAINT fk_AcquistoMateriale_Venditore
-        FOREIGN KEY (Venditore) 
-        REFERENCES Printing_Farm.Venditore(CodiceVenditore)
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION
-);
-
-CREATE TABLE IF NOT EXISTS Printing_Farm.Fornitura (
-    Acquisto INT NOT NULL,
-    Materiale INT NOT NULL,
     PrezzoAcquisto FLOAT NOT NULL,
+    Materiale INT NOT NULL,
+    Quantità INT NOT NULL DEFAULT 1,
     CHECK (PrezzoAcquisto>0),
-    CONSTRAINT fk_Fornitura_Acquisto
-        FOREIGN KEY (Acquisto) 
-        REFERENCES Printing_Farm.AcquistoMateriale(CodiceAcquisto)
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION,
-    CONSTRAINT fk_Fornitura_Materiale
+    CONSTRAINT fk_AcquistoMateriale_Materiale
         FOREIGN KEY (Materiale) 
         REFERENCES Printing_Farm.Materiale(CodiceMateriale)
         ON DELETE NO ACTION
@@ -213,6 +200,7 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.Corriere (
 
 CREATE TABLE IF NOT EXISTS Printing_Farm.Spedizione (
     CodiceSpedizione INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    CodiceTracciamento VARCHAR(30),
     DataSpedizione DATE NOT NULL,
     Venditore INT NOT NULL,
     Corriere INT NOT NULL,

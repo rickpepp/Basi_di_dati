@@ -9,7 +9,7 @@
         echo '<div>
                 <table>';
         
-        $ordini = $dbh -> get_ordine($_GET['id']);
+        $ordini = $dbh -> get_ordine($_GET['id'],$_GET['nome'],$_GET['cognome']);
 
         foreach ($ordini as $ordine) {
             echo '<tr>
@@ -62,15 +62,23 @@
                 <td>';
                 $spedizioni = $dbh -> get_spedizione_ordine($ordine['CodiceOrdine']);
                 foreach($spedizioni as $spedizione) {
-                    echo '<strong>Codice Spedizione</strong>: '.$spedizione['CodiceSpedizione'].'<br/><strong>Data Spedizione</strong>: '.$spedizione['DataSpedizione'].'<br/><strong>Corriere</strong>: '.$spedizione['NomeCorriere'];
+                    echo '<strong>Codice Spedizione</strong>: '.$spedizione['CodiceTracciamento'].'<br/><strong>Data Spedizione</strong>: '.$spedizione['DataSpedizione'].'<br/><strong>Corriere</strong>: '.$spedizione['NomeCorriere'];
                 }
                 echo '</td>
             </tr>';
         }
         
         
-        echo '</table>
-            <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
+        echo '</table>';
+
+        if ($spedizioni -> num_rows == 0) {
+            echo '<input type="button" value="Spedizione" onclick="location.href = \'../views/inserimento_dati.php?action=11&id='.$ordine["CodiceOrdine"].'\'"><br>
+            <script>
+                document.getElementById(\'menu\').style.height = \'120%\';
+            </script>';
+        }
+
+        echo '<input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
         </div>';
         
     }

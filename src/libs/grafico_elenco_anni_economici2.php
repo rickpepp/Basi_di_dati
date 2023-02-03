@@ -17,12 +17,12 @@
 		        yValueFormatString: "$#,##0",
                 showInLegend: true,
                 name: "Entrate",
-		        dataPoints: ';echo json_encode($entrate_data, JSON_NUMERIC_CHECK); echo'},
+		        dataPoints: ';echo json_encode(array_reverse($entrate_data), JSON_NUMERIC_CHECK); echo'},
                 {type: "spline",
 		        yValueFormatString: "$#,##0",
                 showInLegend: true,
                 name: "Uscite",
-		        dataPoints: ';echo json_encode($uscite_data, JSON_NUMERIC_CHECK); echo'
+		        dataPoints: ';echo json_encode(array_reverse($uscite_data), JSON_NUMERIC_CHECK); echo'
 	        }]
         });
 
