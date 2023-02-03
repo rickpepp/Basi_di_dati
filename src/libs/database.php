@@ -749,5 +749,132 @@
          }
       }
 
+      public function get_cliente($nome, $cognome) {
+         if ($cognome == '' && $nome == '') {
+            if($stmt = $this->db->prepare("SELECT * FROM Cliente")) {
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else if ($cognome == '') {
+            if($stmt = $this->db->prepare("SELECT * FROM Cliente WHERE Cognome = ?")) {
+               $stmt->bind_param('s', $cognome);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else if ($nome == '') {
+            if($stmt = $this->db->prepare("SELECT * FROM Cliente WHERE Nome = ?")) {
+               $stmt->bind_param('s', $nome);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else {
+            if($stmt = $this->db->prepare("SELECT * FROM Cliente WHERE Nome = ? AND Cognome = ?")) {
+               $stmt->bind_param('ss', $nome, $cognome);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         }
+      }
+
+      public function aggiungi_ordine($cliente, $stampante, $materiale, $nome_file, $tempo, $data, $quantità, $costo, $servizi, $venditore) {
+         if($stmt = $this->db->prepare("INSERT Ordine (NomeFile, TempoRichiesto, DataOrdine, QuantitàMateriale, Costo, Materiale, Venditore, Stampante, Cliente) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")) {
+            $stmt->bind_param('sssiiiiii', $nome_file, $tempo, $data, $quantità, $costo, $materiale, $venditore, $stampante, $cliente);
+            $stmt->execute();
+            if ($stmt = $this -> db -> prepare("UPDATE Materiale SET UnitàMagazzino = UnitàMagazzino - (? / PesoUnità) WHERE CodiceMateriale = ?;")) {
+               $stmt -> bind_param('ii', $quantità, $materiale);
+               $stmt -> execute();
+               if ($stmt = $this -> db -> prepare("SELECT MAX(CodiceOrdine) FROM Ordine")) {
+                  $stmt -> execute();
+                  $stmt -> store_result();
+                  $stmt -> bind_result($ordine);
+                  $stmt -> fetch();
+                  foreach ($servizi as $servizio) {
+                     $this -> aggiungi_servizio_ordine($servizio, $ordine, $data);
+                  }
+                  if ($stmt = $this -> db -> prepare("SELECT * FROM AnnoEconomico WHERE AnnoRiferimento = ?;")) {
+                     $anno = substr($data,0,4);
+                     $stmt -> bind_param('s', $anno);
+                     $stmt -> execute();
+                     $stmt->store_result();
+                     if ($stmt -> num_rows == 0) {
+                        if ($stmt = $this -> db -> prepare("INSERT INTO AnnoEconomico (AnnoRiferimento) VALUES (?)")) {
+                           $stmt -> bind_param('s', $anno);
+                           $stmt -> execute();
+                        } else {
+                           return false;
+                        }
+                     }
+                     if ($stmt = $this -> db -> prepare("UPDATE AnnoEconomico SET EntrateProduzione = EntrateProduzione + ? WHERE AnnoRiferimento = ?;")) {
+                        $stmt -> bind_param('is', $costo, $anno);
+                        $stmt -> execute();
+                        if ($stmt = $this -> db -> prepare("UPDATE Stampante_3d SET OreStampa = OreStampa + (? / 60) WHERE CodiceStampante = ?;")) {
+                           $stmt -> bind_param('ii', $tempo, $stampante);
+                           $stmt -> execute();
+                           return true;
+                        } else {
+                           return false;
+                        }
+                     } else {
+                        return false;
+                     }
+                  } else {
+                     return false;
+                  }
+               } else {
+                  return false;
+               }
+            }
+         }
+      }
+      
+      private function aggiungi_servizio_ordine($servizio, $ordine, $data) {
+         if ($stmt = $this -> db -> prepare("INSERT Richiesta (Ordine, Servizio) VALUES (?,?)")) {
+            $stmt -> bind_param('ii', $ordine, $servizio);
+            $stmt -> execute();
+            if ($stmt = $this -> db -> prepare("SELECT * FROM AnnoEconomico WHERE AnnoRiferimento = ?;")) {
+               $anno = substr($data,0,4);
+               $stmt -> bind_param('s', $anno);
+               $stmt -> execute();
+               $stmt->store_result();
+               if ($stmt -> num_rows == 0) {
+                  if ($stmt = $this -> db -> prepare("INSERT INTO AnnoEconomico (AnnoRiferimento) VALUES (?)")) {
+                     $stmt -> bind_param('s', $anno);
+                     $stmt -> execute();
+                  } else {
+                     return false;
+                  }
+               }
+               if ($stmt = $this -> db -> prepare("SELECT CostoServizio FROM ServizioPostProduzione WHERE CodiceServizio = ?;")) {
+                  $stmt -> bind_param('i', $servizio);
+                  $stmt -> execute();
+                  $stmt -> store_result();
+                  $stmt -> bind_result($costo);
+                  $stmt -> fetch();
+                  if ($stmt = $this -> db -> prepare("UPDATE AnnoEconomico SET EntrateServizi = EntrateServizi + ? WHERE AnnoRiferimento = ?;")) {
+                     $stmt -> bind_param('is', $costo, $anno);
+                     $stmt -> execute();
+                     return true;
+                  } else {
+                     return false;
+                  }
+               } else {
+                  return false;
+               }
+            } else {
+               return false;
+            }
+         } else {
+            return false;
+         }
+      }
+
     }
 ?>

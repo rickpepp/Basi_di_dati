@@ -58,6 +58,18 @@
                     case 13:
                         include '../libs/inserimento_acquisto_materiale.php';
                         break;
+                    case 14:
+                        include '../libs/ordine_ricerca_cliente.php';
+                        break;
+                    case 15:
+                        include '../libs/ordine_ricerca_stampante.php';
+                        break;
+                    case 16:
+                        include '../libs/ordine_ricerca_materiale.php';
+                        break;
+                    case 17:
+                        include '../libs/inserimento_ordine.php';
+                        break;
                 }
             ?>
         </main>

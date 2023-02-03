@@ -39,7 +39,8 @@
                                 case 'venditore':
                                     echo "<a href='visualizza_dati.php?action=7'><li>Gestione Corrieri</li></a><br>
                                     <a href='inserimento_dati.php?action=4'><li>Gestione Stampanti</li></a><br>
-                                    <a href='inserimento_dati.php?action=7'><li>Gestione Ordini</li></a><br>
+                                    <a href='inserimento_dati.php?action=7'><li>Dettagli Ordini</li></a><br>
+                                    <a href='inserimento_dati.php?action=14'><li>Nuovo Ordine</li></a><br>
                                     <a href='inserimento_dati.php?action=10'><li>Gestione Materiali</li></a><br>
                                     <a href='visualizza_dati.php?action=10'><li>Resoconti Economici</li></a><br>
                                     <script>

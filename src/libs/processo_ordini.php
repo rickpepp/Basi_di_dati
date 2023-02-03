@@ -30,9 +30,6 @@
         
         
         echo '</table>';
-        if ($_SESSION['ruolo'] == 'venditore') {
-            echo ' <input type="button" value="Aggiungi" onclick="location.href=\'../views/inserimento_dati.php?action=10\';"/><br/>';
-        }
         echo '<input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
         </div>';
         

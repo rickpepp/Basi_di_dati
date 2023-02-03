@@ -66,7 +66,18 @@
                     case 11:
                         include '../libs/processo_dettagli_anno_economico.php';
                         break;
-
+                    case 12:
+                        include '../libs/processo_cerca_cliente.php';
+                        break;
+                    case 13:
+                        include '../libs/processo_cerca_ordine_stampante.php';
+                        break;
+                    case 14:
+                        include '../libs/processo_cerca_ordine_materiale.php';
+                        break;
+                    case 15:
+                        include '../libs/processo_cerca_ordine_servizi.php';
+                        break;
                 }
             ?>
         </main>

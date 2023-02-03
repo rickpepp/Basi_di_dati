@@ -123,7 +123,7 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.Stampante_3D (
     MarchioProduzione VARCHAR(30) NOT NULL,
     Modello VARCHAR(30) NOT NULL,
     NumeroSeriale VARCHAR(30) NOT NULL,
-    OreStampa INT NOT NULL DEFAULT 0 ,
+    OreStampa FLOAT NOT NULL DEFAULT 0 ,
     TipologiaStampa VARCHAR(30) NOT NULL,
     CHECK (OreStampa>=0)
 );
@@ -172,7 +172,8 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.Materiale (
     NomeMateriale VARCHAR(35) NOT NULL,
     MarchioProduttore VARCHAR(30) NOT NULL,
     PesoUnità FLOAT NOT NULL,
-    UnitàMagazzino INT NOT NULL DEFAULT 0,
+    UnitàMagazzino FLOAT NOT NULL DEFAULT 0,
+    CHECK(PesoUnità <> 0),
     Tipologia ENUM('Materiale Metallico','Materiale Polimerico','Materiale Composito')
 );
 
@@ -221,9 +222,9 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.Spedizione (
 CREATE TABLE IF NOT EXISTS Printing_Farm.Ordine (
     CodiceOrdine INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     NomeFile VARCHAR(50) NOT NULL,
-    TempoRichiesto TIME NOT NULL,
+    TempoRichiesto INT NOT NULL,
     DataOrdine DATE NOT NULL,
-    QuantitàMateriale INT NOT NULL,
+    QuantitàMateriale FLOAT NOT NULL,
     Costo FLOAT NOT NULL,
     Materiale INT NOT NULL,
     Venditore INT NOT NULL,
