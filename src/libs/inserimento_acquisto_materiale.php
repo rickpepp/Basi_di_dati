@@ -9,7 +9,7 @@
     <footer>
         <p id="informazioni"></p>
         <input type="submit" value="Inserisci" id="cerca"><br>
-        <input type="button" value="Indietro" onclick="../views/menu.php"><br>
+        <input type="button" value="Indietro" onclick="location.href = \'../views/menu.php\'"><br>
     </footer>
 </form>'
 ?>

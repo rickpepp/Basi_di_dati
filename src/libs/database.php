@@ -453,7 +453,7 @@
       //Cerca Stampanti
       public function get_stampanti($marchio, $modello, $seriale) {
          //Il tipo di query cambia in base alle parole chiave inserite
-         if ($modello == '' && $marchio != '') {
+         if ($modello == '' && $marchio != '' && $seriale == '') {
             if($stmt = $this->db->prepare("SELECT CodiceStampante, MarchioProduzione, Modello, NumeroSeriale, OreStampa, TipologiaStampa, DataAcquisto, PrezzoAcquisto, Nome, Cognome FROM Stampante_3d, Acquisto, Venditore WHERE MarchioProduzione = ? AND Acquisto.Stampante = Stampante_3d.CodiceStampante AND Venditore.CodiceVenditore = Acquisto.Venditore")) {
                $stmt->bind_param('s', $marchio);
                $stmt->execute();
@@ -461,9 +461,17 @@
                $result->fetch_all(MYSQLI_ASSOC);
                return $result;
             }
-         } else if ($seriale == '' && $modello != '') {
+         } else if ($seriale == '' && $modello != '' && $marchio != '') {
             if($stmt = $this->db->prepare("SELECT CodiceStampante, MarchioProduzione, Modello, NumeroSeriale, OreStampa, TipologiaStampa, DataAcquisto, PrezzoAcquisto, Nome, Cognome FROM Stampante_3d, Acquisto, Venditore WHERE MarchioProduzione = ? AND Acquisto.Stampante = Stampante_3d.CodiceStampante AND Venditore.CodiceVenditore = Acquisto.Venditore AND Modello = ?")) {
                $stmt->bind_param('ss', $marchio, $modello);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else if ($modello != '' && $marchio == '' && $seriale == '') {
+            if($stmt = $this->db->prepare("SELECT CodiceStampante, MarchioProduzione, Modello, NumeroSeriale, OreStampa, TipologiaStampa, DataAcquisto, PrezzoAcquisto, Nome, Cognome FROM Stampante_3d, Acquisto, Venditore WHERE Modello = ? AND Acquisto.Stampante = Stampante_3d.CodiceStampante AND Venditore.CodiceVenditore = Acquisto.Venditore")) {
+               $stmt->bind_param('s',$modello);
                $stmt->execute();
                $result=$stmt->get_result();
                $result->fetch_all(MYSQLI_ASSOC);
@@ -477,8 +485,8 @@
                return $result;
             }
          } else {
-            if($stmt = $this->db->prepare("SELECT CodiceStampante, MarchioProduzione, Modello, NumeroSeriale, OreStampa, TipologiaStampa, DataAcquisto, PrezzoAcquisto, Nome, Cognome FROM Stampante_3d, Acquisto, Venditore WHERE Acquisto.Stampante = Stampante_3d.CodiceStampante AND Venditore.CodiceVenditore = Acquisto.Venditore AND MarchioProduzione = ? AND Modello = ? AND NumeroSeriale = ?")) {
-               $stmt->bind_param('sss', $marchio, $modello, $seriale);
+            if($stmt = $this->db->prepare("SELECT CodiceStampante, MarchioProduzione, Modello, NumeroSeriale, OreStampa, TipologiaStampa, DataAcquisto, PrezzoAcquisto, Nome, Cognome FROM Stampante_3d, Acquisto, Venditore WHERE Acquisto.Stampante = Stampante_3d.CodiceStampante AND Venditore.CodiceVenditore = Acquisto.Venditore AND NumeroSeriale = ?")) {
+               $stmt->bind_param('s', $seriale);
                $stmt->execute();
                $result=$stmt->get_result();
                $result->fetch_all(MYSQLI_ASSOC);

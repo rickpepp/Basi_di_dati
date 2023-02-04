@@ -43,7 +43,7 @@
         
         echo '</table>
             <input type="button" value="Aggiungi" onclick="location.href=\'../views/inserimento_dati.php?action=6\';"/><br/>
-            <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
+            <input type="button" value="Indietro" onclick="location.href = \'../views/menu.php\'"><br>
         </div>';
         
     }

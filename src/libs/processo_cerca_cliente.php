@@ -32,9 +32,12 @@
         }
         
         echo '</table>
-            <input type="hidden" value="15" name="action"/>
-            <input type="submit" value="Seleziona"><br>
-            <input type="button" value="Nuovo" onclick="location.href= \'../views/inserimento_dati.php?action=19\'"><br>
+            <input type="hidden" value="15" name="action"/>';
+            if ($risultati -> num_rows != 0) {
+                echo '<input type="submit" value="Seleziona"><br>';
+            }
+            
+            echo '<input type="button" value="Nuovo" onclick="location.href= \'../views/inserimento_dati.php?action=19\'"><br>
             <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
             </form>
         </div>';

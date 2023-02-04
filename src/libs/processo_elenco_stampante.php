@@ -15,8 +15,12 @@
                         <th>Numero Seriale</th>
                         <th>Ore di Stampa</th>
                         <th>Tipologia Stampa</th>
-                        <th>Dati di Acquisto</th>
-                        <th>Manutenzione</th>
+                        <th>Dati di Acquisto</th>';
+                        if ($_SESSION['ruolo'] == 'operaio') {
+                            echo '<th>Manutenzione</th>';
+                        }
+                        
+                        echo '
                     </tr>';
         
         $risultati = $dbh -> get_stampanti($_GET['marchio'], $_GET['modello'], $_GET['seriale']);
@@ -28,9 +32,12 @@
                 <td>'.$result["NumeroSeriale"].'</td>
                 <td>'.$result["OreStampa"].'</td>
                 <td>'.$result["TipologiaStampa"].'</td>
-                <td>'.$result["DataAcquisto"].'<br/>'.$result["PrezzoAcquisto"].' €<br/>'.$result["Nome"].' '.$result["Cognome"].'</td>
-                <td><img src="../img/modifica.png" alt="icona modifica" onclick="location.href=\'../views/visualizza_dati.php?action=3&id='.$result["CodiceStampante"].'\'"/></td>
-            </tr>';
+                <td>'.$result["DataAcquisto"].'<br/>'.$result["PrezzoAcquisto"].' €<br/>'.$result["Nome"].' '.$result["Cognome"].'</td>';
+                if ($_SESSION['ruolo'] == 'operaio') {
+                    echo '<td><img src="../img/modifica.png" alt="icona modifica" onclick="location.href=\'../views/visualizza_dati.php?action=3&id='.$result["CodiceStampante"].'\'"/></td>';
+                }
+                
+            echo '</tr>';
         }
         
         echo '</table>';

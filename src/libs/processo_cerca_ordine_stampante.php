@@ -39,9 +39,12 @@
 
            
         echo '<input type="hidden" name="cliente" value="'.$_GET['cliente'].'"/>
-            <input type="hidden" name="action" value="16"/>
-            <input type="submit" value="Seleziona"><br>
-            <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
+            <input type="hidden" name="action" value="16"/>';
+            if ($risultati -> num_rows != 0) {
+                echo '<input type="submit" value="Seleziona"><br>';
+            }
+            
+            echo '<input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
             </form>
         </div>';
         
