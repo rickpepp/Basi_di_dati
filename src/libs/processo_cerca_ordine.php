@@ -46,7 +46,7 @@
             </tr>
             <tr>
                 <th>Cliente</th>
-                <td><strong>Nominativo</strong>: '.$ordine["NomeCliente"].' '.$ordine["CognomeCliente"].'<br/><strong>Email</strong>: '.$ordine["Email"].'<br/><strong>Codice Fiscale</strong>: '.$ordine["CodiceFiscale"].'<br/><strong>Indirizzo</strong>: '.$ordine["Via"].' '.$ordine["NumeroCivico"].' '.$ordine["CAP"].' '.$ordine["Città"].'</td>
+                <td><strong>Nome Cliente</strong>: '.$ordine["NomeCliente"].' '.$ordine["CognomeCliente"].'<br/><strong>Email</strong>: '.$ordine["Email"].'<br/><strong>Codice Fiscale</strong>: '.$ordine["CodiceFiscale"].'<br/><strong>Indirizzo</strong>: '.$ordine["Via"].' '.$ordine["NumeroCivico"].' '.$ordine["CAP"].' '.$ordine["Città"].'</td>
             </tr>
             <tr>
                 <th>Servizi Post Produzione Richiesti</th>
@@ -65,7 +65,19 @@
                     echo '<strong>Codice Spedizione</strong>: '.$spedizione['CodiceTracciamento'].'<br/><strong>Data Spedizione</strong>: '.$spedizione['DataSpedizione'].'<br/><strong>Corriere</strong>: '.$spedizione['NomeCorriere'];
                 }
                 echo '</td>
-            </tr>';
+            </tr>
+            <tr>
+                <th>Progettazione</th>
+                <td>';
+                $progettazioni = $dbh -> get_progettazioni_ordine($ordine['CodiceOrdine']);
+                foreach($progettazioni as $progettazione) {
+                    echo '<strong>Nome Progettista</strong>: '.$progettazione['Nome'].' '.$progettazione['Cognome'].'<br/><strong>Data Progettazione</strong>: '.$progettazione['DataProgettazione'].'<br/><strong>Costo Progettazione</strong>: '.$progettazione['CostoProgettazione'];
+                }
+                echo '</td>
+            </tr>
+            <script>
+                document.getElementById(\'menu\').style.height = \'120%\';
+            </script>';
         }
         
         
@@ -73,9 +85,12 @@
 
         if ($spedizioni -> num_rows == 0) {
             echo '<input type="button" value="Spedizione" onclick="location.href = \'../views/inserimento_dati.php?action=11&id='.$ordine["CodiceOrdine"].'\'"><br>
-            <script>
-                document.getElementById(\'menu\').style.height = \'120%\';
-            </script>';
+            ';
+        }
+
+        if ($progettazioni -> num_rows == 0) {
+            echo '<input type="button" value="Progettazione" onclick="location.href = \'../views/visualizza_dati.php?action=16&id='.$ordine["CodiceOrdine"].'\'"><br>
+            ';
         }
 
         echo '<input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>

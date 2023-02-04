@@ -280,13 +280,89 @@
             return NULL;
          }
          
-         if ($stmt = $this->db->prepare("SELECT dipendente.$id AS id, CodiceContratto, dipendente.Nome, dipendente.Cognome, dipendente.Email, dipendente.CodiceFiscale, DataAssunzione, CostoDipendente, DataLicenziamento, LivelloContrattuale, addetto.Nome AS NomeAddetto, addetto.Cognome AS CognomeAddetto FROM $ruolo dipendente, addettorisorseumane addetto, contrattolavoro WHERE dipendente.Nome = ? AND dipendente.Cognome = ? AND addetto.CodiceARU = ARU_inserimento AND contrattolavoro.$contratto = dipendente.$id;")) {
-            $stmt->bind_param('ss', $nome, $cognome);
-            $stmt->execute();
-            $result=$stmt->get_result();
-            $result->fetch_all(MYSQLI_ASSOC);
+         if ($nome == '' && $cognome == '') {
+            if ($stmt = $this->db->prepare("SELECT dipendente.$id AS id, CodiceContratto, dipendente.Nome, dipendente.Cognome, dipendente.Email, dipendente.CodiceFiscale, DataAssunzione, CostoDipendente, DataLicenziamento, LivelloContrattuale, addetto.Nome AS NomeAddetto, addetto.Cognome AS CognomeAddetto FROM $ruolo dipendente, addettorisorseumane addetto, contrattolavoro WHERE addetto.CodiceARU = ARU_inserimento AND contrattolavoro.$contratto = dipendente.$id;")) {
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else if ($nome != '' && $cognome == '') {
+            if ($stmt = $this->db->prepare("SELECT dipendente.$id AS id, CodiceContratto, dipendente.Nome, dipendente.Cognome, dipendente.Email, dipendente.CodiceFiscale, DataAssunzione, CostoDipendente, DataLicenziamento, LivelloContrattuale, addetto.Nome AS NomeAddetto, addetto.Cognome AS CognomeAddetto FROM $ruolo dipendente, addettorisorseumane addetto, contrattolavoro WHERE dipendente.Nome = ? AND addetto.CodiceARU = ARU_inserimento AND contrattolavoro.$contratto = dipendente.$id;")) {
+               $stmt->bind_param('s', $nome);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else if ($nome == '' && $cognome != '') {
+            if ($stmt = $this->db->prepare("SELECT dipendente.$id AS id, CodiceContratto, dipendente.Nome, dipendente.Cognome, dipendente.Email, dipendente.CodiceFiscale, DataAssunzione, CostoDipendente, DataLicenziamento, LivelloContrattuale, addetto.Nome AS NomeAddetto, addetto.Cognome AS CognomeAddetto FROM $ruolo dipendente, addettorisorseumane addetto, contrattolavoro WHERE dipendente.Cognome = ? AND addetto.CodiceARU = ARU_inserimento AND contrattolavoro.$contratto = dipendente.$id;")) {
+               $stmt->bind_param('s', $cognome);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else {
+            if ($stmt = $this->db->prepare("SELECT dipendente.$id AS id, CodiceContratto, dipendente.Nome, dipendente.Cognome, dipendente.Email, dipendente.CodiceFiscale, DataAssunzione, CostoDipendente, DataLicenziamento, LivelloContrattuale, addetto.Nome AS NomeAddetto, addetto.Cognome AS CognomeAddetto FROM $ruolo dipendente, addettorisorseumane addetto, contrattolavoro WHERE dipendente.Nome = ? AND dipendente.Cognome = ? AND addetto.CodiceARU = ARU_inserimento AND contrattolavoro.$contratto = dipendente.$id;")) {
+               $stmt->bind_param('ss', $nome, $cognome);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
          }
-         return $result;
+      }
+
+      public function get_dipendente_licenziato($nome, $cognome, $ruolo) {
+         if ($ruolo == 'AddettoRisorseUmane') {
+            $id = 'CodiceARU';
+            $contratto = 'ARU';
+         } else if ($ruolo == 'Operaio') {
+            $id = 'CodiceOperaio';
+            $contratto = $ruolo;
+         } else if ($ruolo == 'Progettista') {
+            $id = 'CodiceProgettista';
+            $contratto = $ruolo;
+         } else if ($ruolo == 'Venditore') {
+            $id = 'CodiceVenditore';
+            $contratto = $ruolo;
+         } else {
+            return NULL;
+         }
+         
+         if ($nome == '' && $cognome == '') {
+            if ($stmt = $this->db->prepare("SELECT dipendente.$id AS id, CodiceContratto, dipendente.Nome, dipendente.Cognome, dipendente.Email, dipendente.CodiceFiscale, DataAssunzione, CostoDipendente, DataLicenziamento, LivelloContrattuale, addetto.Nome AS NomeAddetto, addetto.Cognome AS CognomeAddetto FROM $ruolo dipendente, addettorisorseumane addetto, contrattolavoro WHERE addetto.CodiceARU = ARU_inserimento AND contrattolavoro.$contratto = dipendente.$id AND DataLicenziamento IS NOT NULL;")) {
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else if ($nome != '' && $cognome == '') {
+            if ($stmt = $this->db->prepare("SELECT dipendente.$id AS id, CodiceContratto, dipendente.Nome, dipendente.Cognome, dipendente.Email, dipendente.CodiceFiscale, DataAssunzione, CostoDipendente, DataLicenziamento, LivelloContrattuale, addetto.Nome AS NomeAddetto, addetto.Cognome AS CognomeAddetto FROM $ruolo dipendente, addettorisorseumane addetto, contrattolavoro WHERE dipendente.Nome = ? AND addetto.CodiceARU = ARU_inserimento AND contrattolavoro.$contratto = dipendente.$id AND DataLicenziamento IS NOT NULL;")) {
+               $stmt->bind_param('s', $nome);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else if ($nome == '' && $cognome != '') {
+            if ($stmt = $this->db->prepare("SELECT dipendente.$id AS id, CodiceContratto, dipendente.Nome, dipendente.Cognome, dipendente.Email, dipendente.CodiceFiscale, DataAssunzione, CostoDipendente, DataLicenziamento, LivelloContrattuale, addetto.Nome AS NomeAddetto, addetto.Cognome AS CognomeAddetto FROM $ruolo dipendente, addettorisorseumane addetto, contrattolavoro WHERE dipendente.Cognome = ? AND addetto.CodiceARU = ARU_inserimento AND contrattolavoro.$contratto = dipendente.$id AND DataLicenziamento IS NOT NULL;")) {
+               $stmt->bind_param('s', $cognome);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         } else {
+            if ($stmt = $this->db->prepare("SELECT dipendente.$id AS id, CodiceContratto, dipendente.Nome, dipendente.Cognome, dipendente.Email, dipendente.CodiceFiscale, DataAssunzione, CostoDipendente, DataLicenziamento, LivelloContrattuale, addetto.Nome AS NomeAddetto, addetto.Cognome AS CognomeAddetto FROM $ruolo dipendente, addettorisorseumane addetto, contrattolavoro WHERE dipendente.Nome = ? AND dipendente.Cognome = ? AND addetto.CodiceARU = ARU_inserimento AND contrattolavoro.$contratto = dipendente.$id AND DataLicenziamento IS NOT NULL;")) {
+               $stmt->bind_param('ss', $nome, $cognome);
+               $stmt->execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               return $result;
+            }
+         }
       }
 
       //Restituisce Numeri di Telefono selezionando id dipendente ed il ruolo
@@ -873,6 +949,133 @@
             }
          } else {
             return false;
+         }
+      }
+
+      public function get_progettazioni_ordine($ordine) {
+         if($stmt = $this->db->prepare("SELECT CostoProgettazione, DataProgettazione, Nome, Cognome FROM Progettazione, Progettista WHERE Ordine = ? AND Progettista.CodiceProgettista = Progettazione.Progettista")) {
+            $stmt -> bind_param('i', $ordine);
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+      }
+
+      public function get_progettisti() {
+         if($stmt = $this->db->prepare("SELECT * FROM Progettista")) {
+            $stmt->execute();
+            $result=$stmt->get_result();
+            $result->fetch_all(MYSQLI_ASSOC);
+            return $result;
+         }
+      }
+
+      public function aggiungi_progettazione($ordine, $progettista, $data, $costo) {
+         if ($stmt = $this -> db -> prepare("INSERT INTO Progettazione (Ordine, Progettista, CostoProgettazione, DataProgettazione) VALUES (?, ?, ?, ?)")) {
+            $stmt -> bind_param('iiis', $ordine, $progettista, $costo, $data);
+            $stmt -> execute();
+            if ($stmt = $this -> db -> prepare("SELECT * FROM AnnoEconomico WHERE AnnoRiferimento = ?;")) {
+               $anno = substr($data,0,4);
+               $stmt -> bind_param('s', $anno);
+               $stmt -> execute();
+               $stmt->store_result();
+               if ($stmt -> num_rows == 0) {
+                  if ($stmt = $this -> db -> prepare("INSERT INTO AnnoEconomico (AnnoRiferimento) VALUES (?)")) {
+                     $stmt -> bind_param('s', $anno);
+                     $stmt -> execute();
+                  } else {
+                     return false;
+                  }
+               }
+               if ($stmt = $this -> db -> prepare("UPDATE AnnoEconomico SET EntrateProgettazione = EntrateProgettazione + ? WHERE AnnoRiferimento = ?;")) {
+                  $stmt -> bind_param('is', $costo, $anno);
+                  $stmt -> execute();
+                  return true;
+               } else {
+                  return false;
+               }
+            } else {
+               return false;
+            }
+         } else {
+            return false;
+         }
+      }
+
+      public function aggiungi_cliente($nome, $cognome, $email, $codice_fiscale, $indirizzo, $numero_civico, $cap, $città) {
+         if($stmt = $this->db->prepare("INSERT Cliente (Nome, Cognome, Email, CodiceFiscale, Via, NumeroCivico, CAP, Città) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")) {
+            $stmt->bind_param('sssssiis', $nome, $cognome, $email, $codice_fiscale, $indirizzo, $numero_civico, $cap, $città);
+            $stmt->execute();
+            return true;
+         } else {
+            return false;
+         }
+      }
+
+      public function get_max_cliente() {
+         if ($stmt = $this -> db -> prepare("SELECT MAX(CodiceCliente) FROM Cliente")) {
+            $stmt -> execute();
+            $stmt -> store_result();
+            $stmt -> bind_result($id);
+            $stmt -> fetch();
+         }
+         return $id;
+      }
+
+      public function registrazione_contratto_esistente($id, $ruolo, $data_assunzione, $costo_registrazione, $livello, $aru) {
+         switch ($ruolo) {
+            case 'Venditore':
+               $costo = 'CostoVenditori';
+               break;
+            case 'AddettoRisorseUmane':
+               $ruolo = 'ARU';
+               $costo = 'CostoARU';
+               break;
+            case 'Operaio':
+               $costo = 'CostoOperai';
+               break;
+            case 'Progettista':
+               $costo = 'CostoProgettisti';
+               break;
+         }
+         if($stmt = $this->db->prepare("INSERT ContrattoLavoro (DataAssunzione, CostoDipendente, LivelloContrattuale, $ruolo, ARU_inserimento) VALUES (?, ?, ?, ?, ?)")) {
+            $stmt->bind_param('siiii', $data_assunzione, $costo_registrazione, $livello, $id, $aru);
+            $stmt->execute();
+            //Aggiunge Costo All'anno Economico
+            if ($stmt = $this -> db -> prepare("SELECT * FROM AnnoEconomico WHERE AnnoRiferimento = ?;")) {
+               $anno = substr($data_assunzione,0,4);
+               $stmt -> bind_param('s', $anno);
+               $stmt -> execute();
+               $stmt->store_result();
+               if ($stmt -> num_rows == 0) {
+                  if ($stmt = $this -> db -> prepare("INSERT INTO AnnoEconomico (AnnoRiferimento) VALUES (?)")) {
+                     $stmt -> bind_param('s', $anno);
+                     $stmt -> execute();
+                  }
+               }
+               if ($stmt = $this -> db -> prepare("UPDATE AnnoEconomico SET $costo = $costo + ? WHERE AnnoRiferimento = ?;")) {
+                  $stmt -> bind_param('is', $costo_registrazione, $anno);
+                  $stmt -> execute();
+                  return true;
+               }
+            }
+         } else {
+            return false;
+         }
+      }
+
+      public function is_contratto_concluso($id) {
+         if ($stmt = $this -> db -> prepare("SELECT CodiceContratto FROM ContrattoLavoro WHERE CodiceContratto = ? AND DataLicenziamento IS NULL")) {
+               $stmt -> bind_param('i', $id);
+               $stmt -> execute();
+               $result=$stmt->get_result();
+               $result->fetch_all(MYSQLI_ASSOC);
+               if ($result -> num_rows == 0) {
+                  return true;
+               } else {
+                  return false;
+               }
          }
       }
 

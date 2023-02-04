@@ -25,9 +25,12 @@
 
                         //Seleziona Ruolo in base al ruolo
                         if($dbh -> login_check()) {
-                            echo "<a href='../views/inserimento_dati.php?action=1&id=".$_GET["id"]."&ruolo=".$_GET["ruolo_id"]."'><li>Aggiungi Numero di Telefono</li></a><br>
-                            <a href='../views/inserimento_dati.php?action=3&CodiceContratto=".$_GET["CodiceContratto"]."''><li>Aggiungi Data Licenziamento</li></a><br>
-                            <a href='../libs/cancella_contratto.php?CodiceContratto=".$_GET["CodiceContratto"]."'><li>Cancella Contratto</li></a><br>";
+                            echo "<a href='../views/inserimento_dati.php?action=1&id=".$_GET["id"]."&ruolo=".$_GET["ruolo_id"]."'><li>Aggiungi Numero di Telefono</li></a><br>";
+                            if (!$dbh -> is_contratto_concluso($_GET["CodiceContratto"])) {
+                                echo "<a href='../views/inserimento_dati.php?action=3&CodiceContratto=".$_GET["CodiceContratto"]."''><li>Aggiungi Data Licenziamento</li></a><br>";
+                            }
+                            
+                            echo "<a href='../libs/cancella_contratto.php?CodiceContratto=".$_GET["CodiceContratto"]."'><li>Cancella Contratto</li></a><br>";
                         }                      
                     ?>
                     <a href="javascript:history.go(-1)"><li>Torna Indietro</li></a>

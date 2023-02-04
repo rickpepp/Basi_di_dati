@@ -78,6 +78,12 @@
                     case 15:
                         include '../libs/processo_cerca_ordine_servizi.php';
                         break;
+                    case 16:
+                        include '../libs/processo_elenco_progettisti.php';
+                        break;
+                    case 17:
+                        include '../libs/processo_elenco_nuovo_contratto.php';
+                        break;
                 }
             ?>
         </main>

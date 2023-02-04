@@ -70,6 +70,18 @@
                     case 17:
                         include '../libs/inserimento_ordine.php';
                         break;
+                    case 18:
+                        include '../libs/inserimento_progettazione.php';
+                        break;
+                    case 19:
+                        include '../libs/inserimento_cliente.php';
+                        break;
+                    case 20:
+                        include '../libs/ricerca_persona_nuovo_contratto.php';
+                        break;
+                    case 21:
+                        include '../libs/inserimento_contratto_esistente.php';
+                        break;
                 }
             ?>
         </main>
