@@ -6,6 +6,10 @@ html {
     padding: 0%;
 }
 
+#menu {
+    height: 150% !important;
+}
+
 a, a:hover, a:focus, a:active {
     text-decoration: none;
     color: inherit;
@@ -195,10 +199,5 @@ img:hover {
 @media (max-width: 1800px) {
     main > div {
         overflow-x: scroll;
-    }
-
-    table {
-        margin-left: 5%;
-        margin-right: 5%;
     }
 }

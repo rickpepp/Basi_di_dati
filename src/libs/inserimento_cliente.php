@@ -2,14 +2,14 @@
     //Inserimento nuovo cliente
     echo '<form action="../libs/processo_inserimento_cliente.php" method="post" name="riepilogo_dipendente">
     <h2>Aggiungi Nuovo Cliente</h2><br>
-    <label>Nome<br><input type="text" name="nome"></label><br>
-    <label>Cognome<br><input type="text" name="cognome"></label><br>
-    <label>Email<br><input type="email" name="email"></label><br>
-    <label>Codice Fiscale<br><input type="text" name="codiceFiscale"></label><br>
-    <label>Indirizzo<br><input type="text" name="indirizzo"></label><br>
-    <label>Numero Civico<br><input type="number" name="numeroCivico"></label><br>
-    <label>CAP<br><input type="number" name="cap"></label><br>
-    <label>Città<br><input type="text" name="città"></label><br>
+    <label>Nome<br><input type="text" name="nome" required></label><br>
+    <label>Cognome<br><input type="text" name="cognome" required></label><br>
+    <label>Email<br><input type="email" name="email" required></label><br>
+    <label>Codice Fiscale<br><input type="text" name="codiceFiscale" required></label><br>
+    <label>Indirizzo<br><input type="text" name="indirizzo" required></label><br>
+    <label>Numero Civico<br><input type="number" name="numeroCivico" required></label><br>
+    <label>CAP<br><input type="number" name="cap" required></label><br>
+    <label>Città<br><input type="text" name="città" required></label><br>
     <script>
         document.getElementById(\'menu\').style.height = \'160%\';
     </script>

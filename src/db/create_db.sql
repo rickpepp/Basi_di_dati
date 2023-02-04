@@ -1,8 +1,6 @@
 CREATE SCHEMA IF NOT EXISTS Printing_Farm DEFAULT CHARACTER SET utf8 ;
 USE Printing_Farm ;
 
--- Inserire Tutte Le Password Nella Relazione
-
 -- Progettista
 
 CREATE TABLE IF NOT EXISTS Printing_Farm.Progettista (
@@ -129,8 +127,7 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.Stampante_3D (
 );
 
 CREATE TABLE IF NOT EXISTS Printing_Farm.Acquisto (
-    CodiceAcquisto INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Stampante INT NOT NULL,
+    Stampante INT NOT NULL PRIMARY KEY,
     DataAcquisto DATE NOT NULL,
     PrezzoAcquisto FLOAT NOT NULL,
     Venditore INT NOT NULL,
@@ -336,8 +333,6 @@ CREATE TABLE IF NOT EXISTS Printing_Farm.AnnoEconomico (
     EntrateProduzione FLOAT NOT NULL DEFAULT 0,
     EntrateServizi FLOAT NOT NULL DEFAULT 0
 );
-
--- Mantiene (Non Necessario)
 
 -- ContrattoLavoro
 

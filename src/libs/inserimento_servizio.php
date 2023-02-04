@@ -2,8 +2,8 @@
     //Inserimento nuovo servizio di post produzione
     echo '<form action="../libs/processo_inserimento_servizio.php" method="post" name="riepilogo_dipendente">
     <h2>Inserisci Servizio Post Produzione</h2><br>
-    <label>Nome Servizio<br><input type="text" name="nome"></label><br>
-    <label>Costo Servizio<br><input type="number" name="costo"></label><br>
+    <label>Nome Servizio<br><input type="text" name="nome" required></label><br>
+    <label>Costo Servizio<br><input type="number" name="costo" required></label><br>
     <label for="disp">Disponibilità</label>
     <select name="disp" id="disp">
         <option value="Sì">Sì</option>

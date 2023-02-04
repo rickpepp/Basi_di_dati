@@ -6,7 +6,7 @@
     <label>Produttore<br><input type="text" name="produttore" required></label><br>
     <label>Peso per Unità<br><input type="number" name="peso" required></label><br>
     <label for="tipologia">Tipologia</label>
-    <select name="tipologia" id="tipologia">
+    <select name="tipologia" id="tipologia" required>
         <option value="Materiale Metallico">Materiale Metallico</option>
         <option value="Materiale Polimerico">Materiale Polimerico</option>
         <option value="Materiale Composito">Materiale Composito</option>

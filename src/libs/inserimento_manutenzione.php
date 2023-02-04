@@ -2,8 +2,8 @@
     //Inserimento nuova Manutenzione
     echo '<form action="../libs/processo_inserimento_manutenzione.php" method="post" name="riepilogo_dipendente">
     <h2>Inserisci Manutenzione</h2><br>
-    <label>Data Manutenzione<br><input type="date" name="data"></label><br>
-    <label>Descrizione<br><input type="text" name="descrizione"></label><br>
+    <label>Data Manutenzione<br><input type="date" name="data" required></label><br>
+    <label>Descrizione<br><input type="text" name="descrizione" required></label><br>
     <input type="hidden" value="'.$_GET["id"].'" name="id"/>
     <footer>
         <p id="informazioni"></p>

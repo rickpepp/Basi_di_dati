@@ -22,6 +22,7 @@
                 <footer>
                     <input type="button" value="Accedi" onclick="formhasha(this.form, this.form.lpassword);">
                     <p id="informazioni_accedi"></p>
+                    <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
                 </footer>
             </form>
         </main>

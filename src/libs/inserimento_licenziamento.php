@@ -2,7 +2,7 @@
     //Inserimento data licenziamento contratto
     echo '<form action="../libs/processo_inserimento_licenziamento.php" method="post" name="riepilogo_dipendente">
     <h2>Aggiungi Data Licenziamento</h2><br>
-    <label>Data Licenziamento<input type="date" name="data_licenziamento" value="2023-01-13"></label><br>
+    <label>Data Licenziamento<input type="date" name="data_licenziamento" value="2023-01-13" required></label><br>
     <input type="hidden" value="'.$_GET['CodiceContratto'].'" name="CodiceContratto"/>
     <footer>
         <p id="informazioni"></p>

@@ -8,10 +8,10 @@
     //Inserimento dati spedizione a ordine esistente
     echo '<form action="../libs/processo_inserimento_spedizione.php" method="post" name="riepilogo_dipendente">
     <h2>Inserisci Nuova Spedizione</h2><br>
-    <label>Codice Tracciamento<br><input type="text" name="CodiceTracciamento"></label><br>
+    <label>Codice Tracciamento<br><input type="text" name="CodiceTracciamento" required></label><br>
     <label for="corriere">Corriere</label><br>
     <input type="hidden" name="id" value="'.$_GET["id"].'"/>
-    <select name="corriere" id="corriere">';
+    <select name="corriere" id="corriere" required>';
 
     $corrieri = $dbh -> get_corrieri();
 
