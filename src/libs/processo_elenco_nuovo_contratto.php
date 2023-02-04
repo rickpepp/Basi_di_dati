@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Scelta dipendente esistente per nuovo contratto
     //Controlla siano passati correttamente in POST i valori necessari
     if(isset($_GET['nome']) && isset($_GET['cognome']) && $dbh -> login_check()) {
         $ruoli = array("AddettoRisorseUmane", "Operaio", "Progettista", "Venditore");

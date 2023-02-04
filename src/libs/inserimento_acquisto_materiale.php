@@ -1,4 +1,5 @@
 <?php
+    //Acquisto materiale esistente
     echo '<form action="../libs/processo_inserimento_acquisto_materiale.php" method="post" name="riepilogo_dipendente">
     <h2>Acquista Materiale</h2><br>
     <label>Quantità<br><input type="number" name="quantità" required></label><br>

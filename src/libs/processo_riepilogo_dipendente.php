@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Riepilogo contratti dipendenti
     //Controlla siano passati correttamente in POST i valori necessari
     if(isset($_GET['nome']) && isset($_GET['cognome']) && $dbh -> login_check()) {
         $ruoli = array("AddettoRisorseUmane", "Operaio", "Progettista", "Venditore");
@@ -25,6 +26,7 @@
                         <th>Modifica</th>
                     </tr>';
 
+        //Variabili utili per grafica
         $i=0;
         $lenght = 100;
         foreach ($ruoli as $ruolo) {
@@ -44,6 +46,7 @@
                         '<td>'.$single_result["Email"].'</td>'.
                         '<td>'.$single_result["CodiceFiscale"].'</td>'.
                         '<td>';
+                        //recupero numeri di telefono
                         $result_telefono = $dbh -> get_numero_telefono($single_result["id"], $ruolo);
 
                         foreach ($result_telefono as $result_telefono_singolo) {

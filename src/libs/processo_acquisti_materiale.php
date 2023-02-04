@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Cronologia Acquisti Materiale
     if ($dbh -> login_check() && isset($_GET['id'])) {
         echo '<div>
                 <table>

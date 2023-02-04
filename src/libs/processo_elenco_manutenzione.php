@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Elenco Manutenzione singola stampante
     if ($dbh -> login_check() && isset($_GET['id'])) {
         echo '<div>
                 <table>

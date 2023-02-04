@@ -8,6 +8,7 @@
     //Controlla siano passati correttamente in POST i valori necessari
     if(isset($_POST['numero_telefono']) && isset($_POST['ruolo']) && isset($_POST['id']) && $dbh -> login_check()) {
 
+        //Inserimento numero di telefono a persona già esistente
         if($dbh -> aggiungi_numero($_POST['numero_telefono'],$_POST['ruolo'],$_POST['id'])) {
             //Pagina informativa di avvenuta registrazione
             header('Location: ../views/menu.php?r=1&msg=Inserimento Avvenuto Correttamente');

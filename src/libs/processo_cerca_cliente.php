@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Elenco clienti utile per selezionare cliente per nuovo ordine
     if ($dbh -> login_check()) {
         echo '<div>
                 <form style="width:90%;" type="get" action="../views/inserimento_dati.php">

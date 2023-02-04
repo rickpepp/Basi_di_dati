@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Elenco stampanti utile per selezionare stampante per nuovo ordine
     if ($dbh -> login_check() && isset($_GET['marchio']) && isset($_GET['modello'])) {
         echo '<div>
                 <form style="width:90%;" type="get" action="../views/inserimento_dati.php">

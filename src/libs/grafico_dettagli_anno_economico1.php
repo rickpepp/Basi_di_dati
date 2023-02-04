@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Carica dati e percentuali per grafici a torta anno economico in dettaglio
     if ($dbh -> login_check()) {
         $anni = $dbh -> get_anno_economico($_GET['id']);
         foreach ($anni as $anno) {

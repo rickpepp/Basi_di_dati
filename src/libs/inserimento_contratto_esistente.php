@@ -1,5 +1,5 @@
 <?php
-    //Crea form inserimento nuovo dipendente
+    //Inserimento dati contratto persona esistente
     $array = explode(' ', $_GET['persona']);
     echo '<form action="../libs/processo_registrazione_esistente.php" method="post" name="signup_form">
             <h2>Inserisci Dati Contratto</h2><br>

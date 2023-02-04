@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Elenco progettisti
     if ($dbh -> login_check()) {
         echo '<div>
                 <form style="width:90%;" type="get" action="../views/inserimento_dati.php">

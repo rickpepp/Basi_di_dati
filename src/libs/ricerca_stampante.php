@@ -1,4 +1,5 @@
 <?php
+     //Pagina inserimento per la ricerca della stampante
     echo '<form action="../views/visualizza_dati.php" method="get" name="riepilogo_dipendente">
     <h2>Cerca Stampante</h2><br>
     <label>Marchio di Produzione<br><input type="text" name="marchio"></label><br>
@@ -8,7 +9,7 @@
     <footer>
         <p id="informazioni"></p>
         <input type="submit" value="Cerca" id="cerca"><br>
-        <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
+        <input type="button" value="Indietro" onclick="location.href = \'../views/menu.php\'"><br>
     </footer>
 </form>'
 ?>

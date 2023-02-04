@@ -1,4 +1,5 @@
 <?php
+    //Pagina per ricerca ordine
     echo '<form action="../views/visualizza_dati.php" method="get" name="riepilogo_dipendente">
     <h2>Cerca Ordine per Codice</h2><br>
     <label>Numero Ordine<br><input type="number" name="id"></label><br>

@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Costo dipendenti per settori
     if ($dbh -> login_check()) {
         echo '<div>
                 <table>
@@ -29,7 +30,7 @@
         }
         
         echo '</table>
-            <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
+            <input type="button" value="Indietro" onclick="location.href = \'../views/menu.php\'"><br>
         </div>';
         
     }

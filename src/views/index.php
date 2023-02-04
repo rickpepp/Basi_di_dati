@@ -12,6 +12,7 @@
             <h1>Printing Farm</h1>
         </header>
         <main>
+            <!-- Selezionare il ruolo necessario per il login -->
             <input type="button" value="Risorse Umane" onclick="location.href='login.php?r=1';"/>
             <input type="button" value="Operaio" onclick="location.href='login.php?r=2';"/>
             <input type="button" value="Venditore" onclick="location.href='login.php?r=3';"/>

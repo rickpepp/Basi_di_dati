@@ -1,5 +1,5 @@
 <?php
-    //Crea form inserimento nuovo dipendente
+    //Inserimento nuovo contratto e nuova persona
     echo '<form action="../libs/processo_registrazione.php" method="post" name="signup_form">
             <h2>Inserisci Dipendente</h2><br>
             <label>Nome<br><input type="text" name="nome_registrazione"></label><br>

@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Elenco stampanti
     if ($dbh -> login_check() && isset($_GET['marchio']) && isset($_GET['modello'])) {
         echo '<div>
                 <table>
@@ -33,6 +34,8 @@
         }
         
         echo '</table>';
+
+        //Possibilità di acquistare stampanti solo se sei venditore
         if ($_SESSION['ruolo'] == 'venditore') {
             echo ' <input type="button" value="Aggiungi" onclick="location.href=\'../views/inserimento_dati.php?action=9\';"/><br/>';
         }

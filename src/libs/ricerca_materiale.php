@@ -1,4 +1,5 @@
 <?php
+    //Pagina di ricerca materiale
     echo '<form action="../views/visualizza_dati.php" method="get" name="riepilogo_dipendente">
     <h2>Cerca Materiale</h2><br>
     <label>Nome Materiale<br><input type="text" name="materiale"></label><br>
@@ -6,7 +7,7 @@
     <footer>
         <p id="informazioni"></p>
         <input type="submit" value="Cerca" id="cerca"><br>
-        <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
+        <input type="button" value="Indietro" onclick="location.href = \'../views/menu.php\'"><br>
     </footer>
 </form>'
 ?>

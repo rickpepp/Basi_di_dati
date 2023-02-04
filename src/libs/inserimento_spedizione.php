@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Inserimento dati spedizione a ordine esistente
     echo '<form action="../libs/processo_inserimento_spedizione.php" method="post" name="riepilogo_dipendente">
     <h2>Inserisci Nuova Spedizione</h2><br>
     <label>Codice Tracciamento<br><input type="text" name="CodiceTracciamento"></label><br>

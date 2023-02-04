@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Mostra elenco operai
     if ($dbh -> login_check()) {
         
         $risultati = $dbh -> get_operai();

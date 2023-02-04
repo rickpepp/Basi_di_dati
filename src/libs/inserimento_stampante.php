@@ -1,4 +1,5 @@
 <?php
+    //Inserimento nuova stampante
     echo '<form action="../libs/processo_inserimento_stampante.php" method="post" name="riepilogo_dipendente">
     <h2>Inserisci Nuova Stampante</h2><br>
     <label>Produttore<br><input type="text" name="produttore" required></label><br>

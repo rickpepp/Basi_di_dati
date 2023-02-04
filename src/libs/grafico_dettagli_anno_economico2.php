@@ -1,4 +1,5 @@
 <?php
+	//Script impostazioni grafici canvasjs
     echo'
         <script>
         window.onload = function() {

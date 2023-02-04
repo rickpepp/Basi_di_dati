@@ -1,4 +1,5 @@
 <?php
+    //Inserimento nuovo cliente
     echo '<form action="../libs/processo_inserimento_cliente.php" method="post" name="riepilogo_dipendente">
     <h2>Aggiungi Nuovo Cliente</h2><br>
     <label>Nome<br><input type="text" name="nome"></label><br>

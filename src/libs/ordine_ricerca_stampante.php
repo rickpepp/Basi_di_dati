@@ -1,4 +1,5 @@
 <?php
+    //Pagina ricerca stampante utile alla creazione nuovo ordine
     echo '<form action="../views/visualizza_dati.php" method="get" name="riepilogo_dipendente">
     <h2>Inserimento Ordine - Cerca Stampante</h2><br>
     <label>Marchio di Produzione<br><input type="text" name="marchio"></label><br>

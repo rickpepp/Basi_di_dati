@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Dettaglio Ordine
     if ($dbh -> login_check() && isset($_GET['id'])) {
         echo '<div>
                 <table>';
@@ -83,11 +84,13 @@
         
         echo '</table>';
 
+        //Possibilità di aggiungere spedizione se non presente
         if ($spedizioni -> num_rows == 0) {
             echo '<input type="button" value="Spedizione" onclick="location.href = \'../views/inserimento_dati.php?action=11&id='.$ordine["CodiceOrdine"].'\'"><br>
             ';
         }
 
+        //Possibilità di aggiungere progettazione se non presente
         if ($progettazioni -> num_rows == 0) {
             echo '<input type="button" value="Progettazione" onclick="location.href = \'../views/visualizza_dati.php?action=16&id='.$ordine["CodiceOrdine"].'\'"><br>
             ';

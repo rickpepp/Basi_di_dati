@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Elenco materiali utile per selezionare materiale per nuovo ordine
     if ($dbh -> login_check()) {
         echo '<div>
                 <form style="width:90%;" type="get" action="../views/visualizza_dati.php">

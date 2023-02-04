@@ -1,4 +1,5 @@
 <?php
+    //Inserimento nuovo materiale
     echo '<form action="../libs/processo_inserimento_materiale.php" method="post" name="riepilogo_dipendente">
     <h2>Inserisci Nuovo Materiale</h2><br>
     <label>Nome Materiale<br><input type="text" name="nome" required></label><br>

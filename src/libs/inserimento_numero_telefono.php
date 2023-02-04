@@ -1,4 +1,5 @@
 <?php
+    //Inserimento numero di telefono a persona già esistente
     echo '<form action="../libs/processo_inserimento_numero_telefono.php" method="post" name="riepilogo_dipendente">
     <h2>Aggiungi numero Telefono</h2><br>
     <label>Numero Telefono<br><input type="text" name="numero_telefono"></label><br>

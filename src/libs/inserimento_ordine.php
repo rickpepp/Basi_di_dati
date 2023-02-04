@@ -1,4 +1,5 @@
 <?php
+    //Inserimento dati nuovo ordine
     echo '<form action="../libs/processo_inserimento_ordine.php" method="post" name="riepilogo_dipendente">
     <h2>Inserisci Dati Ordine</h2><br>
     <label>Nome File<br><input type="text" name="nome"></label><br>

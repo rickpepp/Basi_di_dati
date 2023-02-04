@@ -1,5 +1,5 @@
 <?php
-
+        //Elenco Anni Economici
         echo '<div>
                 <h2>Riepilogo Anni Precedenti</h2>
                 <table>
@@ -27,7 +27,7 @@
             <script>
                 document.getElementById(\'menu\').style.height = \'140%\';
             </script>
-            <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
+            <input type="button" value="Indietro" onclick="location.href = \'../views/menu.php\'"><br>
         </div>';
         
 

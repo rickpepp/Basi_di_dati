@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Elenco Servizi di Post Produzione
     if ($dbh -> login_check()) {
         echo '<div>
                 <table>
@@ -22,17 +23,20 @@
                 <td>'.$result["NomeServizio"].'</td>
                 <td>'.$result["CostoServizio"].'€</td>
                 <td>';
-                if($result["Disponibilità"]) {
-                    echo 'Sì';
-                } else {
-                    echo 'No';
-                }
-                echo '</td>
+            if($result["Disponibilità"]) {
+                echo 'Sì';
+            } else {
+                echo 'No';
+            }
+            echo '</td>
                 <td>';
-                $risultati_operaio = $dbh -> get_operaio_servizio($result["CodiceServizio"]);
-                foreach ($risultati_operaio as $operaio) {
-                    echo $operaio["Nome"].' '.$operaio["Cognome"].'<br/>';
-                }
+
+            $risultati_operaio = $dbh -> get_operaio_servizio($result["CodiceServizio"]);
+
+            foreach ($risultati_operaio as $operaio) {
+                echo $operaio["Nome"].' '.$operaio["Cognome"].'<br/>';
+            }
+
             echo '</td>
                 </tr>';
         }

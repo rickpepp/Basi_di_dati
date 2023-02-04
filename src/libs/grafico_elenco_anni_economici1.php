@@ -5,6 +5,7 @@
 
     sec_session_start();
 
+    //Caricamento dati per anni economici in sintesi
     if ($dbh -> login_check()) {
         $risultati = $dbh -> get_anni_economici();
 

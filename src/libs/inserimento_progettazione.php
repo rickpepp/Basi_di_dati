@@ -1,4 +1,5 @@
 <?php
+    //Inserimento progettazione a ordine esistente
     echo '<form action="../libs/processo_inserimento_progettazione.php" method="post" name="riepilogo_dipendente">
     <h2>Inserisci Dati Progettazione</h2><br>
     <label>Costo Progettazione<br><input type="number" name="costo"></label><br>
