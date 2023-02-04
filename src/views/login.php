@@ -24,6 +24,11 @@
                     <p id="informazioni_accedi"></p>
                     <input type="button" value="Indietro" onclick="javascript:history.go(-1)"><br>
                 </footer>
+                <style>
+                    html {
+                        height: 200%;
+                    }
+                </style>
             </form>
         </main>
     </body>
